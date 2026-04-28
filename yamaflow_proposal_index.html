@@ -1,0 +1,3599 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>YamaFlow 事業提案書</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Noto+Serif+JP:wght@400;700&display=swap');
+
+  :root {
+    --green: #1a6b4a;
+    --green-light: #2d9467;
+    --green-pale: #e8f5ee;
+    --green-ultra: #f2faf6;
+    --teal: #0d7a6e;
+    --amber: #c47a1e;
+    --amber-pale: #fef8ed;
+    --text: #1a1a1a;
+    --text-muted: #5a6070;
+    --text-light: #8a92a0;
+    --border: #e0e6e3;
+    --border-light: #eef2ef;
+    --bg: #f8faf9;
+    --white: #ffffff;
+    --nav-w: 260px;
+    --shadow: 0 2px 12px rgba(26,107,74,0.08);
+    --shadow-md: 0 4px 20px rgba(26,107,74,0.12);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 15px;
+    line-height: 1.85;
+    color: var(--text);
+    background: var(--bg);
+  }
+
+  /* ── HEADER ── */
+  .site-header {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--green);
+    height: 56px;
+    display: flex; align-items: center; padding: 0 24px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  }
+  .site-header .logo {
+    color: #fff; font-size: 14px; font-weight: 500; letter-spacing: 0.05em;
+  }
+  .site-header .logo span {
+    font-size: 18px; font-weight: 700; margin-right: 10px; color: #a8eac8;
+  }
+  .header-meta {
+    margin-left: auto; color: rgba(255,255,255,0.6); font-size: 12px;
+  }
+  .menu-btn {
+    display: none; background: none; border: none; cursor: pointer;
+    padding: 8px; color: white; font-size: 20px; margin-right: 12px;
+  }
+
+  /* ── SIDEBAR NAV ── */
+  .sidebar {
+    position: fixed; top: 56px; left: 0; bottom: 0;
+    width: var(--nav-w);
+    background: var(--white);
+    border-right: 1px solid var(--border);
+    overflow-y: auto;
+    z-index: 50;
+    transition: transform 0.3s ease;
+  }
+  .sidebar::-webkit-scrollbar { width: 4px; }
+  .sidebar::-webkit-scrollbar-track { background: transparent; }
+  .sidebar::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+  .nav-inner { padding: 16px 0 40px; }
+  .nav-section-label {
+    font-size: 10px; font-weight: 700; color: var(--text-light);
+    letter-spacing: 0.12em; text-transform: uppercase;
+    padding: 12px 20px 4px; margin-top: 8px;
+  }
+  .sidebar ul { list-style: none; }
+  .sidebar ul li { border-bottom: 1px solid var(--border-light); }
+  .nav-link {
+    display: block; padding: 9px 20px;
+    font-size: 12.5px; color: var(--text-muted); text-decoration: none;
+    line-height: 1.5; transition: all 0.15s;
+  }
+  .nav-link:hover {
+    background: var(--green-pale); color: var(--green); padding-left: 24px;
+  }
+  .nav-link.active {
+    background: var(--green-pale); color: var(--green);
+    border-left: 3px solid var(--green); padding-left: 17px;
+    font-weight: 500;
+  }
+
+  /* ── MAIN CONTENT ── */
+  .main-wrap {
+    margin-left: var(--nav-w);
+    padding-top: 56px;
+    min-height: 100vh;
+  }
+  .content {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 40px 48px 80px;
+  }
+
+  /* ── COVER SECTION ── */
+  .cover-block {
+    background: linear-gradient(135deg, var(--green) 0%, #0d5c3a 100%);
+    border-radius: 12px;
+    padding: 48px;
+    margin-bottom: 48px;
+    color: white;
+    position: relative;
+    overflow: hidden;
+  }
+  .cover-block::before {
+    content: '';
+    position: absolute; top: -40px; right: -40px;
+    width: 200px; height: 200px;
+    background: rgba(255,255,255,0.04);
+    border-radius: 50%;
+  }
+  .cover-block::after {
+    content: '';
+    position: absolute; bottom: -60px; right: 60px;
+    width: 300px; height: 300px;
+    background: rgba(255,255,255,0.03);
+    border-radius: 50%;
+  }
+  .cover-title {
+    font-size: 24px; font-weight: 700; line-height: 1.5;
+    margin-bottom: 20px; color: white;
+  }
+  .cover-title .brand {
+    display: inline-block;
+    background: rgba(255,255,255,0.15);
+    padding: 2px 14px; border-radius: 20px;
+    font-size: 28px; margin-bottom: 8px;
+    color: #a8eac8;
+  }
+  .cover-meta {
+    display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 28px;
+  }
+  .cover-meta span {
+    font-size: 13px; color: rgba(255,255,255,0.75);
+    background: rgba(255,255,255,0.1);
+    padding: 4px 12px; border-radius: 4px;
+  }
+  .cover-kpi {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+  }
+  .kpi-item {
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 8px; padding: 16px;
+  }
+  .kpi-label {
+    font-size: 11px; color: rgba(255,255,255,0.65); margin-bottom: 4px;
+    letter-spacing: 0.05em;
+  }
+  .kpi-val {
+    font-size: 22px; font-weight: 700; color: #a8eac8;
+  }
+
+  /* ── SECTIONS ── */
+  .section-block {
+    background: var(--white);
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    margin-bottom: 24px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+  }
+  .section-header {
+    background: var(--green-ultra);
+    border-bottom: 1px solid var(--border);
+    padding: 16px 28px;
+    cursor: pointer;
+    user-select: none;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .section-header:hover { background: var(--green-pale); }
+  .section-header h1 {
+    font-size: 16px !important; font-weight: 700;
+    color: var(--green) !important;
+    margin: 0 !important; padding: 0 !important;
+    border: none !important;
+    background: none !important;
+    line-height: 1.4;
+  }
+  .toggle-icon {
+    width: 24px; height: 24px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--green); font-size: 16px;
+    transition: transform 0.25s;
+  }
+  .toggle-icon.open { transform: rotate(180deg); }
+  .section-body {
+    padding: 28px 28px 32px;
+    display: block;
+  }
+  .section-body.collapsed { display: none; }
+
+  /* ── TYPOGRAPHY in body ── */
+  .section-body h2 {
+    font-size: 15px; font-weight: 700;
+    color: var(--text);
+    border-left: 3px solid var(--green-light);
+    padding: 2px 0 2px 12px;
+    margin: 28px 0 12px;
+  }
+  .section-body h3 {
+    font-size: 14px; font-weight: 700;
+    color: var(--green);
+    margin: 20px 0 8px;
+  }
+  .section-body p {
+    margin-bottom: 14px; color: var(--text);
+  }
+  .section-body ul, .section-body ol {
+    padding-left: 20px; margin-bottom: 14px;
+  }
+  .section-body li {
+    margin-bottom: 5px; color: var(--text);
+  }
+  .section-body blockquote {
+    border-left: 4px solid var(--green-light);
+    background: var(--green-ultra);
+    padding: 14px 18px;
+    margin: 16px 0;
+    border-radius: 0 6px 6px 0;
+    font-size: 14px;
+    color: var(--text);
+  }
+  .section-body strong { color: var(--text); font-weight: 700; }
+
+  /* ── TABLES ── */
+  .section-body table {
+    width: 100%; border-collapse: collapse;
+    margin: 16px 0; font-size: 13.5px;
+    border-radius: 8px; overflow: hidden;
+    border: 1px solid var(--border);
+  }
+  .section-body th {
+    background: var(--green);
+    color: white; font-weight: 600;
+    padding: 10px 14px; text-align: left;
+    font-size: 12.5px; letter-spacing: 0.03em;
+  }
+  .section-body td {
+    padding: 9px 14px; border-bottom: 1px solid var(--border-light);
+    vertical-align: top;
+  }
+  .section-body tr:last-child td { border-bottom: none; }
+  .section-body tr:nth-child(even) td { background: var(--green-ultra); }
+  .section-body tr:hover td { background: var(--green-pale); }
+
+  /* ── CODE BLOCKS ── */
+  .section-body pre {
+    background: #1e2620;
+    color: #b8e0c8;
+    padding: 18px 20px;
+    border-radius: 8px;
+    overflow-x: auto;
+    margin: 16px 0;
+    font-size: 13px;
+    line-height: 1.7;
+    font-family: 'Courier New', monospace;
+  }
+  .section-body code {
+    background: #e8f4ee;
+    color: #1a6b4a;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 13px;
+    font-family: 'Courier New', monospace;
+  }
+  .section-body pre code {
+    background: none; color: inherit; padding: 0;
+  }
+
+  /* ── ROADMAP PHASES ── */
+  .phase-badge {
+    display: inline-block;
+    background: var(--green);
+    color: white;
+    font-size: 11px; font-weight: 700;
+    padding: 3px 10px; border-radius: 12px;
+    margin-right: 8px; vertical-align: middle;
+  }
+
+  /* ── BACK TO TOP ── */
+  .back-top {
+    position: fixed; bottom: 32px; right: 32px;
+    width: 44px; height: 44px;
+    background: var(--green);
+    color: white; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; box-shadow: var(--shadow-md);
+    font-size: 18px; text-decoration: none;
+    opacity: 0; transition: opacity 0.3s;
+    z-index: 200;
+  }
+  .back-top.visible { opacity: 1; }
+  .back-top:hover { background: var(--green-light); }
+
+  /* ── PROGRESS BAR ── */
+  .progress-bar {
+    position: fixed; top: 56px; left: var(--nav-w); right: 0; height: 3px;
+    background: var(--border); z-index: 90;
+  }
+  .progress-fill {
+    height: 100%; background: var(--green-light);
+    width: 0%; transition: width 0.1s;
+  }
+
+  /* ── HR ── */
+  .section-body hr {
+    border: none; border-top: 1px solid var(--border); margin: 20px 0;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    .sidebar { transform: translateX(-100%); }
+    .sidebar.open { transform: translateX(0); }
+    .main-wrap { margin-left: 0; }
+    .menu-btn { display: block; }
+    .content { padding: 24px 20px 60px; }
+    .cover-kpi { grid-template-columns: 1fr 1fr; }
+    .progress-bar { left: 0; }
+    .cover-block { padding: 28px 24px; }
+    .cover-title { font-size: 18px; }
+  }
+  @media print {
+    .sidebar, .site-header, .back-top, .progress-bar { display: none; }
+    .main-wrap { margin-left: 0; padding-top: 0; }
+    .section-body.collapsed { display: block !important; }
+    .toggle-icon { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <button class="menu-btn" onclick="toggleSidebar()" aria-label="メニュー">☰</button>
+  <div class="logo"><span>YamaFlow</span>山形インバウンド需要予測・観光導線制御プラットフォーム</div>
+  <div class="header-meta">v07 · 社内決裁用 · 2026-04-28</div>
+</header>
+
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+
+<nav class="sidebar" id="sidebar">
+  <div class="nav-inner">
+    <div class="nav-section-label">目次</div>
+    <ul>
+<li><a href="#s3" class="nav-link">1. エグゼクティブサマリー</a></li>
+<li><a href="#s4" class="nav-link">2. 事業の再定義</a></li>
+<li><a href="#s8" class="nav-link">3. Vision / Mission / Concept</a></li>
+<li><a href="#s21" class="nav-link">4. なぜ今やるべきか</a></li>
+<li><a href="#s27" class="nav-link">5. 市場背景と山形の追い風</a></li>
+<li><a href="#s32" class="nav-link">6. 先駆者・競合分析</a></li>
+<li><a href="#s53" class="nav-link">7. ターゲット市場設計</a></li>
+<li><a href="#s67" class="nav-link">8. 山形の潜在観光資源分析</a></li>
+<li><a href="#s83" class="nav-link">9. 事業全体像</a></li>
+<li><a href="#s90" class="nav-link">10. リーンキャンバス</a></li>
+<li><a href="#s107" class="nav-link">11. サービス構成</a></li>
+<li><a href="#s112" class="nav-link">12. 観光需要予測・導線制御の仕組み</a></li>
+<li><a href="#s118" class="nav-link">13. 快適度スコアとナッジ設計</a></li>
+<li><a href="#s132" class="nav-link">14. 観光地キャパシティ台帳</a></li>
+<li><a href="#s141" class="nav-link">15. 地域別制御・成長シナリオ</a></li>
+<li><a href="#s158" class="nav-link">16. 地域経済循環設計</a></li>
+<li><a href="#s166" class="nav-link">17. 自治体・事業者・県内企業の負担設計</a></li>
+<li><a href="#s177" class="nav-link">18. 収益モデル</a></li>
+<li><a href="#s182" class="nav-link">19. 費用計画</a></li>
+<li><a href="#s191" class="nav-link">20. 収益予測</a></li>
+<li><a href="#s202" class="nav-link">21. ロードマップ</a></li>
+<li><a href="#s215" class="nav-link">22. 運用体制</a></li>
+<li><a href="#s220" class="nav-link">23. データ・AI・技術仕様</a></li>
+<li><a href="#s224" class="nav-link">24. 法務・責任範囲・免責</a></li>
+<li><a href="#s232" class="nav-link">25. リスク・デメリット・突破策</a></li>
+<li><a href="#s254" class="nav-link">26. KPI・見える化</a></li>
+<li><a href="#s258" class="nav-link">27. 営業戦略</a></li>
+<li><a href="#s263" class="nav-link">28. 価格表案</a></li>
+<li><a href="#s266" class="nav-link">29. やらないこと</a></li>
+<li><a href="#s267" class="nav-link">30. 次に行うべき確認事項</a></li>
+<li><a href="#s271" class="nav-link">31. 最終提案文</a></li>
+<li><a href="#s272" class="nav-link">付録A：初期ページ案</a></li>
+<li><a href="#s275" class="nav-link">付録B：ページテンプレート</a></li>
+<li><a href="#s276" class="nav-link">付録C：Responsible Travel項目</a></li>
+<li><a href="#s277" class="nav-link">付録D：Travel Safety項目</a></li>
+
+    </ul>
+  </div>
+</nav>
+
+<div class="main-wrap">
+  <div class="content">
+
+    <div class="cover-block">
+      <div class="cover-title">
+        <div class="brand">YamaFlow</div><br>
+        山形インバウンド需要予測・観光導線制御プラットフォーム事業提案書
+      </div>
+      <div class="cover-meta">
+        <span>作成日：2026-04-28</span>
+        <span>v07 最終修正版・社内決裁用完成版</span>
+        <span>株式会社デジコンキューブ</span>
+        <span>社内決裁用・網羅版</span>
+      </div>
+      <div class="cover-kpi">
+        <div class="kpi-item"><div class="kpi-label">3年目目標売上</div><div class="kpi-val">1億円超</div></div>
+        <div class="kpi-item"><div class="kpi-label">自治体受注目標</div><div class="kpi-val">3〜5件</div></div>
+        <div class="kpi-item"><div class="kpi-label">事業者契約目標</div><div class="kpi-val">50〜100件</div></div>
+      </div>
+    </div>
+
+    
+<div class="section-block" id="s1">
+  <div class="section-header" onclick="toggleSection(this)">
+    <h1>YamaFlow：山形インバウンド需要予測・観光導線制御プラットフォーム事業提案書</h1>
+    <span class="toggle-icon open">▲</span>
+  </div>
+  <div class="section-body">
+    <p>作成日：2026-04-28<br />
+版数：v07（最終修正版・社内決裁用完成版）<br />
+位置づけ：社内決裁用・網羅版<br />
+対象会社：株式会社デジコンキューブ<br />
+想定用途：新規事業検討、社内提案、自治体提案の原案、事業計画書の叩き台  </p>
+<hr />
+<h2 id="s2">目次</h2>
+<ol>
+<li>エグゼクティブサマリー</li>
+<li>事業の再定義</li>
+<li>Vision / Mission / Concept</li>
+<li>なぜ今やるべきか</li>
+<li>市場背景と山形の追い風</li>
+<li>先駆者・競合分析</li>
+<li>ターゲット市場設計</li>
+<li>山形の潜在観光資源分析</li>
+<li>事業全体像</li>
+<li>リーンキャンバス</li>
+<li>サービス構成</li>
+<li>観光需要予測・導線制御の仕組み</li>
+<li>快適度スコアとナッジ設計</li>
+<li>観光地キャパシティ台帳</li>
+<li>地域別制御・成長シナリオ</li>
+<li>地域経済循環設計</li>
+<li>自治体・事業者・県内企業の負担設計</li>
+<li>収益モデル</li>
+<li>費用計画</li>
+<li>収益予測</li>
+<li>ロードマップ</li>
+<li>運用体制</li>
+<li>データ・AI・技術仕様</li>
+<li>法務・責任範囲・免責</li>
+<li>リスク・デメリット・突破策</li>
+<li>KPI・見える化</li>
+<li>営業戦略</li>
+<li>価格表案</li>
+<li>やらないこと</li>
+<li>次に行うべき確認事項</li>
+<li>最終提案文</li>
+<li>付録A〜<strong>D</strong></li>
+</ol>
+<hr />
+  </div>
+</div>
+
+<div class="section-block" id="s3">
+  <div class="section-header" onclick="toggleSection(this)">
+    <h1>1. エグゼクティブサマリー</h1>
+    <span class="toggle-icon open">▲</span>
+  </div>
+  <div class="section-body">
+    <p>本事業は、山形への海外関心を単に増やす観光メディア事業ではない。検索・SNS・AI検索上で発生する海外旅行者の関心を可視化し、山形県内の各観光地の受入容量、季節性、交通条件、地域住民の生活環境を踏まえながら、旅行者を県内各地へ自然に分散させる <strong>観光需要予測・観光導線制御プラットフォーム</strong> である。</p>
+<p>事業の初期段階では、台湾・香港を中心とした繁体字圏FIT旅行者を主軸に、英語圏・欧米豪の高付加価値層、タイ・ASEANの雪・温泉・地方体験層へ段階的に展開する。山形県は、蔵王、銀山温泉、山寺、出羽三山、米沢牛などの既存認知資源を持つ一方、月山の春〜初夏スキー、南陽ワイン、赤湯温泉、長井のまち歩き、上山温泉、庄内・出羽三山の精神文化など、海外向けにはまだ十分に見えていない潜在資源が多い。</p>
+<p>本事業では、まず自社メディア・多言語ページ・Instagram・ショート動画・検索データを使って、山形に対する海外関心を取得・可視化する。その後、自治体、観光協会、観光事業者、交通事業者、県内企業と連携し、以下を実現する。</p>
+<ul>
+<li>山形の海外向け検索導線の整備</li>
+<li>台湾・香港FIT向け繁体字SEOの先取り</li>
+<li>英語圏高付加価値層向けの山形ブランド再編集</li>
+<li>地域別・季節別・体験別のモデルコース整備</li>
+<li>混雑予測・快適度スコアによる自然な分散誘導</li>
+<li>銀山温泉・蔵王などの一極集中の抑制</li>
+<li>月山・南陽・長井・米沢・上山・庄内などへの回遊促進</li>
+<li>観光地キャパシティ台帳による受入容量の可視化</li>
+<li>観光需要急増アラートによる事前対応</li>
+<li>県内企業への業務波及、地域経済循環の創出</li>
+<li>将来的な防災・避難マップ・Travel Safetyとの統合</li>
+</ul>
+<p>収益面では、単なる広告収益ではなく、自治体DX受託、観光需要レポート、キャパシティ調査、ダッシュボード運用、事業者向け多言語ページ制作、SNS運用、動画制作、補助金活用支援、交通・混雑オペレーション設計、県内企業連携パッケージを複合的に組み合わせる。</p>
+<p>特に本提案は、観光庁の「観光需要分散のための地域観光資源のコンテンツ化促進事業」と政策目的が極めて近い。同事業は、インバウンドの需要分散に資する観光コンテンツ造成、情報発信、販路開拓を支援するものであり、地方公共団体、DMO、民間事業者等を対象としている。新創出型、分野特化型、品質向上型といった類型があり、YamaFlowの初期実証、繁体字・英語コンテンツ整備、地域別モデルコース、SNS・動画発信、予約・導線整備、需要分散レポートは、次回以降の公募に向けた申請準備テーマになり得る。</p>
+<p>3年目の標準シナリオでは、自治体案件、事業者制作、SNS運用、動画制作、データレポート、掲載・送客収益を組み合わせて年間売上8,000万円〜1億円超を目指す。収益根拠は、自治体DX受託3件、事業者制作50件、補助金活用支援30件、SNS運用10件などの積み上げで設計する。強気シナリオでは、複数自治体導入と広域展開により年間1.5億円以上も視野に入る。</p>
+<p>本事業の本質は、観光客を無制限に増やすことではない。山形への海外関心を、地域全体の回遊、地元消費、県内企業の新規業務、持続可能な観光政策へ変換することである。</p>
+<hr />
+  </div>
+</div>
+
+<div class="section-block" id="s4">
+  <div class="section-header" onclick="toggleSection(this)">
+    <h1>2. 事業の再定義</h1>
+    <span class="toggle-icon open">▲</span>
+  </div>
+  <div class="section-body">
+    <h2 id="s5">2.1 従来の見方</h2>
+<p>当初の見方は、山形の海外向け観光情報が不足しているため、英語・多言語の観光メディアを構築し、検索流入を獲得するというものだった。</p>
+<p>この方向性自体は有効である。ただし、社長からの依頼である、</p>
+<ul>
+<li>自治体と連携する</li>
+<li>もしくは自治体内で事業を起こす</li>
+<li>多額の利益を上げる</li>
+</ul>
+<p>という要件から見ると、単なる観光メディアでは収益規模が不足する。</p>
+<h2 id="s6">2.2 再定義後の事業</h2>
+<p>本事業は、以下のように再定義する。</p>
+<blockquote>
+<p>山形への海外関心を検索・SNS・AI検索上で可視化し、観光地ごとの受入容量に合わせて旅行者の流れを設計し、その需要を山形県内の観光事業者・交通事業者・警備会社・印刷会社・映像会社・翻訳者・人材会社・清掃会社・IT企業などの新たな収益機会へ変換する、観光需要予測・観光導線制御プラットフォーム事業。</p>
+</blockquote>
+<h2 id="s7">2.3 メディアの位置づけ</h2>
+<p>自社メディアは主役ではなく、以下の役割を持つ。</p>
+<ul>
+<li>海外向け検索面を取るための実験基盤</li>
+<li>山形への海外関心を測定するデータ取得基盤</li>
+<li>自治体提案の実績づくり</li>
+<li>観光事業者向け営業ツール</li>
+<li>SNS・動画素材の蓄積場所</li>
+<li>将来のダッシュボード、快適度スコア、Travel Safety連携のフロント</li>
+</ul>
+<p>つまり、メディアは広告収益を目的とするだけではなく、自治体DX受託・事業者支援・地域経済循環設計のための営業資産である。</p>
+<hr />
+  </div>
+</div>
+
+<div class="section-block" id="s8">
+  <div class="section-header" onclick="toggleSection(this)">
+    <h1>3. Vision / Mission / Concept</h1>
+    <span class="toggle-icon open">▲</span>
+  </div>
+  <div class="section-body">
+    <h2 id="s9">3.1 Vision</h2>
+<h3 id="s10">推奨Vision</h3>
+<p><strong>山形への海外関心を、地域全体の回遊と持続可能な経済循環に変換する。</strong></p>
+<h3 id="s11">対行政・対外説明での補足表現</h3>
+<p>AI検索時代における、山形県の海外向け観光導線インフラをつくる。</p>
+<p>この補足表現は、自治体・観光協会・外部パートナーに対して、YamaFlowが単なる観光メディアではなく、検索・SNS・AI上の需要を地域政策や観光導線へ接続するインフラであることを説明する際に用いる。</p>
+<h2 id="s12">3.2 Mission</h2>
+<p>山形県内に点在する観光資源、飲食、宿泊、交通、体験、季節資源、安全情報を、外国人旅行者・Google検索・AI検索・SNS検索が理解しやすい形に再編集し、地域ごとの受入容量に合わせて流量を調整する。</p>
+<p>これにより、蔵王・銀山温泉など一部人気スポットへの過集中を抑えつつ、月山、南陽、長井、米沢、上山、庄内などへ需要を分散し、観光消費を山形県内の多様な事業者へ波及させる。</p>
+<h2 id="s13">3.3 事業コンセプト</h2>
+<h3 id="s14">推奨名称</h3>
+<p><strong>通称：YamaFlow（ヤマフロー）</strong></p>
+<p>正式名称：<strong>山形インバウンド需要予測・観光導線制御プラットフォーム</strong></p>
+<p>対外説明では「YamaFlow」を前面に出し、正式名称で機能を補足する。社内検討や自治体向け資料では正式名称を併記することで、覚えやすさと事業内容の正確性を両立する。</p>
+<h3 id="s15">名称に込める意味</h3>
+<ul>
+<li>Yama：山形、山、山岳信仰、雪国の地域性</li>
+<li>Flow：観光客の流れ、検索導線、地域回遊、地域経済循環</li>
+<li>YamaFlow：山形への海外関心を、受入容量に合わせて県内各地へ自然に流す仕組み</li>
+</ul>
+<h3 id="s16">参考名称案</h3>
+<ul>
+<li>山形観光インフラ</li>
+<li>Yamagata Smart Travel Flow Platform</li>
+<li>Yamagata Inbound Travel Intelligence Platform</li>
+<li>山形観光需要可視化・地域分散プラットフォーム</li>
+</ul>
+<h2 id="s17">3.4 ブランドメッセージ案</h2>
+<h3 id="s18">日本語</h3>
+<p><strong>海外からの関心を、山形全体の回遊と消費へ。</strong></p>
+<h3 id="s19">英語圏向け</h3>
+<p><strong>Uncrowded Japan, Deeply Seasonal.</strong><br />
+<strong>Sacred Mountains, Snow, Onsen and Slow Travel.</strong></p>
+<h3 id="s20">繁体字圏向け</h3>
+<p><strong>不只藏王與銀山，真正會玩的山形自由行。</strong><br />
+<strong>賞雪、溫泉、美食與地方小旅行的山形。</strong></p>
+<hr />
+  </div>
+</div>
+
+<div class="section-block" id="s21">
+  <div class="section-header" onclick="toggleSection(this)">
+    <h1>4. なぜ今やるべきか</h1>
+    <span class="toggle-icon open">▲</span>
+  </div>
+  <div class="section-body">
+    <h2 id="s22">4.1 日本全体のインバウンド回復・拡大</h2>
+<p>日本全体ではインバウンド需要が回復・拡大しており、国としても訪日外国人旅行者数・消費額の拡大、地方誘客、持続可能な観光地域づくりを進めている。</p>
+<p>この流れの中で、山形県がただ観光客を待つだけでは、需要は一部の有名観光地に集中し、県内全体への経済波及は限定的になる可能性がある。</p>
+<h2 id="s23">4.2 山形への海外評価の追い風</h2>
+<p>山形は、世界的旅行メディアでの評価、蔵王の高付加価値化、星野リゾートの進出予定、インバウンド受入環境整備の補助制度など、海外向けに見せる材料が重なっている。</p>
+<p>ただし、この追い風は自動的に地域経済へ変換されるわけではない。海外旅行者が検索したときに、山形県内のどこを、どう回り、どこで食べ、どこに泊まり、どう安全に移動すればよいかが見えなければ、関心は有名スポットだけで終わる。</p>
+<h2 id="s24">4.3 既存の観光情報は点に偏りやすい</h2>
+<p>外国人が山形を検索した場合、出てきやすいのは蔵王、銀山温泉、山寺、出羽三山、米沢牛などの既存認知スポットである。</p>
+<p>一方で、月山の春〜初夏スキー、南陽ワイン、赤湯温泉、長井のまち歩き、上山温泉、庄内の精神文化、山形市の飲食導線などは、海外向けにはまだ十分に整理されていない可能性が高い。</p>
+<h2 id="s25">4.4 オーバーツーリズムの前に制御設計が必要</h2>
+<p>京都、小樽、富士山周辺、銀山温泉などの例が示すように、観光需要は増えればよいものではない。人気が出すぎると、交通混雑、住民生活への影響、写真撮影マナー、ゴミ、私有地侵入、国内客の利用機会減少などが起きる。</p>
+<p>山形はまだ多くの地域でその前段階にある。だからこそ、需要が爆発してから規制するのではなく、需要の兆しを検索・SNS・AI上で早めに把握し、快適度スコアや代替導線によって自然に分散させる設計が必要である。</p>
+<h2 id="s26">4.5 国の補助金・政策文脈との一致</h2>
+<p>YamaFlowは、観光庁が進める「観光需要分散のための地域観光資源のコンテンツ化促進事業」と高い整合性を持つ。</p>
+<p>同事業は、観光による経済効果を全国へ波及させ、観光消費を拡大し、持続的な地方誘客により観光需要を平準化することを目的としている。対象は地方公共団体、DMO、民間事業者等であり、地域資源を活用した観光コンテンツ造成、情報発信、販路開拓等を総合的に支援する制度である。</p>
+<p>YamaFlowで扱う以下の要素は、同制度の政策目的と接続しやすい。</p>
+<ul>
+<li>インバウンド需要を蔵王・銀山温泉だけに集中させず、月山・南陽・長井・米沢・上山・庄内へ分散すること</li>
+<li>地域資源を英語・繁体字でコンテンツ化すること</li>
+<li>SNS、動画、インフルエンサー、予約導線、販路開拓と連動すること</li>
+<li>高付加価値な観光コンテンツやガストロノミー、ワイン、日本酒、米沢牛、雪国の食文化などを整備すること</li>
+<li>観光需要の平準化と地域産業への波及効果を可視化すること</li>
+</ul>
+<p>ただし、令和8年度公募は2026年4月時点で締切済みであるため、今年度は申請そのものよりも、次回公募に向けた実績づくり、事業者・自治体との連携形成、初期データ取得、ページ・SNS・需要レポートの整備を優先する。令和9年度以降の公募を狙う場合、2026年10月頃から申請候補テーマ、共同申請先、対象経費、実施体制、見積、KPIを準備しておく必要がある。</p>
+<p>また、山形県でもインバウンド受入環境整備支援事業費補助金が実施されており、案内表示や自社Webサイト等の多言語化、自動翻訳機等の導入などが補助対象となる。これは、個別観光事業者向けの多言語ページ制作、Googleマップ整備、メニュー翻訳、写真・動画制作、予約導線整備を商品化する際の営業材料になる。</p>
+<hr />
+  </div>
+</div>
+
+<div class="section-block" id="s27">
+  <div class="section-header" onclick="toggleSection(this)">
+    <h1>5. 市場背景と山形の追い風</h1>
+    <span class="toggle-icon open">▲</span>
+  </div>
+  <div class="section-body">
+    <h2 id="s28">5.1 National Geographic選出の意味</h2>
+<p>山形が世界的な旅行先として紹介されたことは、英語圏・欧米豪の高付加価値層に対する権威付けになる。特に以下の文脈で効きやすい。</p>
+<ul>
+<li>hidden Japan</li>
+<li>uncrowded Japan</li>
+<li>spiritual mountains</li>
+<li>onsen</li>
+<li>snow monsters</li>
+<li>slow travel</li>
+<li>authentic rural Japan</li>
+<li>nature and culture</li>
+</ul>
+<p>ただし、National Geographicの効果が直接台湾・香港・タイに同じ強さで効くとは限らない。実際の山形・東北への送客実績を考えると、短期的には台湾・香港・タイなど東アジア・東南アジアのFIT旅行者を主軸にする方が現実的である。</p>
+<h2 id="s29">5.2 星野リゾート蔵王進出の意味</h2>
+<p>星野リゾートの蔵王進出は、蔵王が高付加価値観光地として再編集される兆しである。直接的に山形選出と因果関係があるとは断定できないが、少なくとも以下は言える。</p>
+<ul>
+<li>蔵王の国際的な見せ方が強まる</li>
+<li>高価格帯・高付加価値層が流入しやすくなる</li>
+<li>周辺エリアへの波及設計が必要になる</li>
+<li>蔵王だけに需要が集中する可能性がある</li>
+<li>山形市、上山、南陽、米沢、月山などへ分散させる導線が重要になる</li>
+</ul>
+<blockquote>
+<p>National Geographic選出と星野リゾート蔵王進出が重なり、山形・蔵王の海外向け認知と高付加価値化の流れが強まっている。</p>
+</blockquote>
+<h2 id="s30">5.3 白馬・ニセコの先行例からの学び</h2>
+<p>白馬・ニセコは、ターゲットを絞り、雪・スキー・長期滞在・英語対応を整備することで、地方でも世界市場を獲得できることを示した。一方で、外資流入、地価上昇、冬季集中、地域文化の希薄化、住民摩擦、価格高騰などの副作用も示している。</p>
+<p>山形は白馬・ニセコをそのまま模倣するべきではない。山形は雪だけでなく、温泉、精神文化、食、ワイン、山岳信仰、春スキー、果物、日本酒、ローカル鉄道、まち歩きなどに資源が分散している。</p>
+<p>したがって、山形は <strong>一極集中型リゾート化</strong> ではなく、<strong>分散型・季節反転型・地域経済循環型のインバウンド戦略</strong> を取るべきである。</p>
+<h2 id="s31">5.4 山形の現在の課題</h2>
+<ul>
+<li>外国人向け情報が有名観光地に偏る</li>
+<li>繁体字圏FIT向けの細かい検索導線が不足</li>
+<li>車なし旅行者向けの情報が弱い</li>
+<li>月山など季節反転型資源が海外に見えていない</li>
+<li>南陽・長井・米沢などの回遊導線が弱い</li>
+<li>観光地ごとの受入容量が可視化されていない</li>
+<li>混雑予兆を早期に把握する仕組みがない</li>
+<li>県内企業への業務波及が設計されていない</li>
+</ul>
+<hr />
+  </div>
+</div>
+
+<div class="section-block" id="s32">
+  <div class="section-header" onclick="toggleSection(this)">
+    <h1>6. 先駆者・競合分析</h1>
+    <span class="toggle-icon open">▲</span>
+  </div>
+  <div class="section-body">
+    <h2 id="s33">6.1 競合・先駆者の分類</h2>
+<p>本事業の競合は、同じ名称のサービスだけではない。以下の5種類が競合または先行プレイヤーとなる。</p>
+<ol>
+<li>全国インバウンドメディア</li>
+<li>インバウンドSEO・海外向けプロモーション会社</li>
+<li>山形県内の既存公式観光サイト</li>
+<li>デジタルマップ・観光DX SaaS</li>
+<li>生成AI・AI検索そのもの</li>
+</ol>
+<h2 id="s34">6.2 全国インバウンドメディア</h2>
+<p>例：MATCHA、Japan Travel、GaijinPot、Live Japan、Japan Guide、Time Out Tokyoなど。</p>
+<h3 id="s35">強み</h3>
+<ul>
+<li>ドメインが強い</li>
+<li>多言語展開に慣れている</li>
+<li>海外ユーザーを持っている</li>
+<li>検索順位が強い</li>
+<li>自治体・観光事業者とのタイアップ実績がある</li>
+</ul>
+<h3 id="s36">弱み</h3>
+<ul>
+<li>山形県内の細かい地域情報までは深く掘りにくい</li>
+<li>南陽・長井・月山・上山などロングテール領域は手薄になりやすい</li>
+<li>日常的な情報更新、現地取材、地元企業連携までは重い</li>
+<li>山形側の受入体制整備までは担いにくい</li>
+</ul>
+<h3 id="s37">勝ち筋</h3>
+<p>大手とは正面衝突しない。大手が拾いにくいロングテール、地域別モデルコース、交通導線、快適度スコア、観光地キャパシティ、県内企業連携で勝つ。</p>
+<h2 id="s38">6.3 台湾・香港向けインバウンドプロモーション会社</h2>
+<p>台湾・香港向けの訪日メディアやインバウンドプロモーション会社は、繁体字圏への発信力を持つ。固有名詞を挙げた競合分析は事実確認が必要になるため、自治体提案版では一般表現に留める。</p>
+<h3 id="s39">強み</h3>
+<ul>
+<li>台湾・香港向けの媒体力</li>
+<li>繁体字コンテンツ制作力</li>
+<li>訪日旅行者へのリーチ</li>
+<li>タイアップ・広告の即効性</li>
+<li>現地SNSや旅行者コミュニティへの接続力</li>
+</ul>
+<h3 id="s40">弱み</h3>
+<ul>
+<li>山形特化ではない場合が多い</li>
+<li>山形側の受け皿整備までは担いにくい</li>
+<li>地元事業者の日常的な取材・更新・営業は難しい</li>
+<li>避難マップ、快適度スコア、県内企業連携まで一体で扱うわけではない</li>
+<li>広告出稿後の地域内回遊、二次交通、混雑分散、自治体レポート化までは別途必要</li>
+</ul>
+<h3 id="s41">デジコンキューブの立ち位置</h3>
+<p>台湾・香港向けプロモーション会社は、外に届ける媒体・広告チャネルである。デジコンキューブは、山形側の受け皿を作る地域実装会社である。</p>
+<p>理想は、山形側の高品質ページ群、事業者DB、SNS素材、モデルコース、ダッシュボードをデジコンキューブが整えたうえで、必要に応じて台湾・香港向け媒体を使うことである。</p>
+<h2 id="s42">6.4 山形県内の既存観光サイト</h2>
+<p>例：VISIT YAMAGATA、山形県観光公式、各市町村観光協会サイト、Trip Yamagataなど。</p>
+<h3 id="s43">強み</h3>
+<ul>
+<li>公式性がある</li>
+<li>情報の信頼性が高い</li>
+<li>自治体からリンクされやすい</li>
+<li>既存ドメイン評価がある</li>
+</ul>
+<h3 id="s44">弱み</h3>
+<ul>
+<li>旅行者目線の旅程設計が弱い場合がある</li>
+<li>SNS・動画との連動が弱い場合がある</li>
+<li>AI検索向け構造化が不十分な可能性</li>
+<li>地域別・季節別・交通別のロングテールが弱い可能性</li>
+<li>更新スピードが遅くなりやすい</li>
+</ul>
+<h3 id="s45">勝ち筋</h3>
+<p>公式サイトと競合しない。公式情報を補完する「海外向け編集・導線設計・需要可視化・分散誘導」の役割を取る。</p>
+<h2 id="s46">6.5 デジタルマップSaaS</h2>
+<p>観光マップ、防災マップ、スタンプラリー、クーポン、MaaS連携などのSaaSは存在する。</p>
+<h3 id="s47">強み</h3>
+<ul>
+<li>システム機能が整っている</li>
+<li>自治体導入実績がある</li>
+<li>管理画面がある</li>
+<li>マップ機能が強い</li>
+</ul>
+<h3 id="s48">弱み</h3>
+<ul>
+<li>地域の編集力は別問題</li>
+<li>写真・動画・SNS・多言語ライティングは別途必要</li>
+<li>観光需要予測・快適度スコア・県内企業連携までは弱い場合がある</li>
+</ul>
+<h3 id="s49">勝ち筋</h3>
+<p>システム機能だけで勝負しない。必要なら既存SaaSを裏側で使ってもよい。デジコンキューブは、地域編集、制作、運用、分析、自治体提案、県内企業連携の司令塔になる。</p>
+<h2 id="s50">6.6 生成AI・AI検索</h2>
+<p>ChatGPT、Gemini、Claude、Perplexity、Google AI Overviewsなどは旅行者の検索行動を変える。</p>
+<h3 id="s51">脅威</h3>
+<ul>
+<li>ユーザーが直接AIに聞く</li>
+<li>旅行プランをAIが組む</li>
+<li>メディアを見ずに答えを得る可能性</li>
+</ul>
+<h3 id="s52">機会</h3>
+<p>AIは元情報がなければ答えられない。したがって、本事業はAI検索に勝つのではなく、AI検索の参照元になることを狙う。</p>
+<hr />
+  </div>
+</div>
+
+<div class="section-block" id="s53">
+  <div class="section-header" onclick="toggleSection(this)">
+    <h1>7. ターゲット市場設計</h1>
+    <span class="toggle-icon open">▲</span>
+  </div>
+  <div class="section-body">
+    <h2 id="s54">7.1 ターゲットを「外国人」と広く置かない</h2>
+<p>「外国人観光客」は広すぎる。国・言語・旅行経験・交通手段・滞在日数・関心テーマで分けるべきである。</p>
+<p>本事業の初期ターゲットは、以下の順に設定する。</p>
+<ol>
+<li>台湾・香港の繁体字圏FIT旅行者</li>
+<li>タイ・ASEANの雪・温泉・地方体験層</li>
+<li>欧米豪の高付加価値・長期滞在・自然文化志向層</li>
+<li>国内在住外国人、留学生、ALT、ビジネス客</li>
+</ol>
+<h2 id="s55">7.2 第一ターゲット：台湾・香港の繁体字圏FIT旅行者</h2>
+<h3 id="s56">理由</h3>
+<ul>
+<li>山形・東北への実需が大きい</li>
+<li>日本旅行リピーターが多い</li>
+<li>東京・大阪・京都以外の地方旅行に関心がある</li>
+<li>雪、温泉、食、果物、ローカル体験との相性が良い</li>
+<li>繁体字SEOに空きがある可能性が高い</li>
+</ul>
+<h3 id="s57">検索キーワード例</h3>
+<ul>
+<li>山形自由行</li>
+<li>山形旅遊</li>
+<li>山形景點</li>
+<li>山形溫泉</li>
+<li>山形滑雪</li>
+<li>山形藏王樹冰</li>
+<li>山形交通</li>
+<li>山形自駕</li>
+<li>山形不自駕</li>
+<li>山形二日遊</li>
+<li>山形三日遊</li>
+<li>山形美食</li>
+<li>山形賞雪</li>
+<li>山形紅葉</li>
+<li>山形酒莊</li>
+<li>南陽酒莊</li>
+<li>赤湯溫泉</li>
+<li>米澤牛</li>
+<li>長井景點</li>
+<li>月山夏季滑雪</li>
+</ul>
+<h3 id="s58">必要なページ</h3>
+<ul>
+<li>山形自由行完整攻略</li>
+<li>山形二日遊推薦</li>
+<li>不自駕也能玩山形</li>
+<li>仙台出發山形一日遊</li>
+<li>藏王樹冰之外的山形景點</li>
+<li>山形溫泉與美食行程</li>
+<li>南陽酒莊與赤湯溫泉</li>
+<li>米澤牛與上杉文化一日遊</li>
+<li>日本也能夏天滑雪？山形月山完整攻略</li>
+</ul>
+<h2 id="s59">7.3 第二ターゲット：タイ・ASEAN</h2>
+<h3 id="s60">刺さるテーマ</h3>
+<ul>
+<li>雪体験</li>
+<li>温泉</li>
+<li>果物</li>
+<li>家族旅行</li>
+<li>写真映え</li>
+<li>地方日本</li>
+<li>食</li>
+</ul>
+<h3 id="s61">方針</h3>
+<p>初期からタイ語全対応は重い。まずは英語・繁体字で受け皿を作り、反応が出たテーマからタイ語LPを追加する。</p>
+<h2 id="s62">7.4 第三ターゲット：欧米豪の高付加価値層</h2>
+<h3 id="s63">刺さるテーマ</h3>
+<ul>
+<li>hidden Japan</li>
+<li>uncrowded Japan</li>
+<li>slow travel</li>
+<li>sacred mountains</li>
+<li>onsen</li>
+<li>snow monsters</li>
+<li>spring skiing</li>
+<li>food and sake</li>
+<li>rural culture</li>
+<li>spiritual travel</li>
+</ul>
+<h3 id="s64">方針</h3>
+<p>National Geographic文脈を英語SEOのフックに使う。ただし、短期集客ではなく、中長期の高付加価値層獲得を狙う。</p>
+<h2 id="s65">7.5 第四ターゲット：国内在住外国人</h2>
+<h3 id="s66">理由</h3>
+<ul>
+<li>すでに日本にいるため移動ハードルが低い</li>
+<li>英語・やさしい日本語・Instagramで届きやすい</li>
+<li>月山春スキー、山寺、南陽ワインなど週末旅行に向く</li>
+</ul>
+<hr />
+  </div>
+</div>
+
+<div class="section-block" id="s67">
+  <div class="section-header" onclick="toggleSection(this)">
+    <h1>8. 山形の潜在観光資源分析</h1>
+    <span class="toggle-icon open">▲</span>
+  </div>
+  <div class="section-body">
+    <h2 id="s68">8.1 山形は蔵王・銀山だけではない</h2>
+<p>山形の海外認知は、蔵王、銀山温泉、山寺、出羽三山などに偏りやすい。しかし、山形には未発見の資源が多い。</p>
+<h2 id="s69">8.2 月山：春〜初夏スキーという季節反転型資源</h2>
+<p>月山スキー場は、豪雪地帯であるため、一般的な冬季スキー場とは異なり、春〜初夏に滑れる希少なスキー資源である。これは白馬・ニセコの冬季スキー競争とは違うポジションを取れる。</p>
+<h3 id="s70">価値</h3>
+<ul>
+<li>4月〜7月の空白市場を狙える</li>
+<li>欧米豪のニッチスキーヤーに刺さる</li>
+<li>台湾・香港には「日本で春・夏に雪がある」という驚きで刺さる</li>
+<li>国内在住外国人の週末旅行に向く</li>
+</ul>
+<h3 id="s71">ページ案</h3>
+<ul>
+<li>Ski in Japan Until July: A Complete Guide to Mt. Gassan</li>
+<li>Gassan Summer Skiing: Japan’s Hidden Late-Season Snow Destination</li>
+<li>日本也能夏天滑雪？山形月山夏季滑雪完整攻略</li>
+<li>五月六月還能滑雪的日本秘境：山形月山</li>
+</ul>
+<h2 id="s72">8.3 蔵王：国際認知の入口</h2>
+<p>蔵王は樹氷、温泉、スキーで強い。ただし、蔵王だけに需要が集中すると、冬季偏重・宿泊価格上昇・周辺地域への波及不足が起きる可能性がある。</p>
+<h3 id="s73">方針</h3>
+<p>蔵王を入口にしつつ、山形市、上山、赤湯、月山、米沢へ流す。</p>
+<h2 id="s74">8.4 銀山温泉：制御対象の代表</h2>
+<p>銀山温泉は雪景色・レトロな街並み・SNS映えで強い一方、交通・駐車場・日帰り集中の課題がある。ここは「伸ばす」よりも「守りながら分散させる」設計が必要である。</p>
+<h2 id="s75">8.5 出羽三山・山寺：精神文化資源</h2>
+<p>欧米豪の高付加価値層に対して、山形の精神文化、山岳信仰、巡礼、静けさ、死と再生の文脈は強い。</p>
+<h3 id="s76">ページ案</h3>
+<ul>
+<li>Spiritual Yamagata: A Journey Through Dewa Sanzan and Yamadera</li>
+<li>Sacred Mountains of Yamagata: Japan’s Hidden Pilgrimage Route</li>
+<li>山形靈性之旅：出羽三山、山寺與山伏文化</li>
+</ul>
+<h2 id="s77">8.6 南陽・赤湯：ワインと温泉</h2>
+<p>南陽・赤湯は、台湾・香港FIT、女性グループ、大人旅、食と温泉の組み合わせに向く。</p>
+<h3 id="s78">ページ案</h3>
+<ul>
+<li>Nanyo Wine Tourism: A Hidden Winery and Onsen Trip in Yamagata</li>
+<li>Akayu Onsen and Yamagata Wine: A One-Day Itinerary</li>
+<li>山形南陽酒莊之旅：赤湯溫泉與葡萄酒一日遊</li>
+</ul>
+<h2 id="s79">8.7 長井：不自駕・ローカルまち歩き</h2>
+<p>長井は一気に大量集客する場所ではないが、分散先として重要である。フラワー長井線、水のまち、商店街、まち歩き、季節の花を組み合わせる。</p>
+<h2 id="s80">8.8 米沢：食と歴史の高単価導線</h2>
+<p>米沢牛だけで終わらせず、上杉文化、小野川温泉、工芸、雪灯篭、歴史体験へ広げる。</p>
+<h2 id="s81">8.9 上山：蔵王分散とヘルスツーリズム</h2>
+<p>上山は蔵王の入口、温泉、武家屋敷、ワイン、クアオルトなどを組み合わせられる。蔵王集中を緩和する受け皿として有効。</p>
+<h2 id="s82">8.10 庄内・出羽三山：長期滞在・精神文化・食</h2>
+<p>出羽三山、羽黒山、山伏文化、精進料理、日本海の食、酒田・鶴岡の文化を組み合わせることで、長期滞在型・高付加価値型にしやすい。</p>
+<hr />
+  </div>
+</div>
+
+<div class="section-block" id="s83">
+  <div class="section-header" onclick="toggleSection(this)">
+    <h1>9. 事業全体像</h1>
+    <span class="toggle-icon open">▲</span>
+  </div>
+  <div class="section-body">
+    <h2 id="s84">9.1 4層構造</h2>
+<h3 id="s85">第1層：自社メディア・検索導線</h3>
+<ul>
+<li>英語・繁体字ページ</li>
+<li>モデルコース</li>
+<li>Instagram</li>
+<li>ショート動画</li>
+<li>Google検索・AI検索対応</li>
+</ul>
+<h3 id="s86">第2層：事業者向けサービス</h3>
+<ul>
+<li>多言語ページ制作</li>
+<li>写真撮影</li>
+<li>動画制作</li>
+<li>SNS運用</li>
+<li>Googleマップ整備</li>
+<li>補助金活用支援</li>
+<li>予約導線整備</li>
+</ul>
+<h3 id="s87">第3層：自治体向けサービス</h3>
+<ul>
+<li>観光需要レポート</li>
+<li>地域別検索シェア可視化</li>
+<li>観光地キャパシティ台帳</li>
+<li>快適度スコア</li>
+<li>需要急増アラート</li>
+<li>ダッシュボード</li>
+<li>実証事業</li>
+</ul>
+<h3 id="s88">第4層：安心観光・地域経済循環基盤</h3>
+<ul>
+<li>Travel Safety</li>
+<li>防災・避難マップ連携</li>
+<li>交通・混雑オペレーション</li>
+<li>県内企業リソース活用</li>
+<li>地域経済循環KPI</li>
+</ul>
+<h2 id="s89">9.2 本事業の流れ</h2>
+<ol>
+<li>海外向けページとSNSで山形への関心を獲得</li>
+<li>検索・SNS・AI検索の反応を測定</li>
+<li>地域別・季節別・国別の需要を可視化</li>
+<li>観光地ごとの受入容量と照合</li>
+<li>快適度スコア・代替導線で自然に分散</li>
+<li>必要業務を県内企業の仕事に変換</li>
+<li>自治体へ政策判断材料としてレポート化</li>
+<li>防災・安全・交通・地域経済循環へ拡張</li>
+</ol>
+<hr />
+  </div>
+</div>
+
+<div class="section-block" id="s90">
+  <div class="section-header" onclick="toggleSection(this)">
+    <h1>10. リーンキャンバス</h1>
+    <span class="toggle-icon open">▲</span>
+  </div>
+  <div class="section-body">
+    <h2 id="s91">10.1 Problem：課題</h2>
+<h3 id="s92">外国人旅行者</h3>
+<ul>
+<li>山形の多言語情報が断片的</li>
+<li>有名観光地以外が見つけにくい</li>
+<li>車なしでの回り方が分からない</li>
+<li>混雑・交通規制・雪道情報が分かりにくい</li>
+<li>似た体験の代替候補が見つけにくい</li>
+</ul>
+<h3 id="s93">自治体</h3>
+<ul>
+<li>どの国からどの地域に関心があるか見えにくい</li>
+<li>需要急増に事前対応できない</li>
+<li>観光施策の効果測定が難しい</li>
+<li>一極集中と地域分散のバランスが難しい</li>
+<li>県内企業への波及設計が不足</li>
+</ul>
+<h3 id="s94">観光事業者</h3>
+<ul>
+<li>多言語化できていない</li>
+<li>SNSが続かない</li>
+<li>外国人向けの見せ方が分からない</li>
+<li>補助金をどう使えばよいか分からない</li>
+<li>自社ページの海外反応が分からない</li>
+</ul>
+<h3 id="s95">地域住民</h3>
+<ul>
+<li>観光客増加による生活動線への影響</li>
+<li>私有地侵入、騒音、ゴミ、撮影マナー</li>
+<li>国内客・県民が利用しにくくなる懸念</li>
+</ul>
+<h2 id="s96">10.2 Customer Segments：顧客</h2>
+<h3 id="s97">初期</h3>
+<ul>
+<li>台湾・香港FIT旅行者</li>
+<li>山形県内観光事業者</li>
+<li>宿泊施設</li>
+<li>飲食店</li>
+<li>ワイナリー</li>
+<li>体験事業者</li>
+</ul>
+<h3 id="s98">中期</h3>
+<ul>
+<li>市町村</li>
+<li>観光協会</li>
+<li>商工会議所</li>
+<li>DMO / DMC</li>
+<li>交通事業者</li>
+</ul>
+<h3 id="s99">長期</h3>
+<ul>
+<li>山形県</li>
+<li>広域観光団体</li>
+<li>防災・交通・DX関連部署</li>
+<li>県内企業コンソーシアム</li>
+</ul>
+<h2 id="s100">10.3 Unique Value Proposition：独自価値</h2>
+<blockquote>
+<p>山形への海外関心を、検索・SNS・AI上で可視化し、観光地ごとの受入容量に合わせて自然に分散させ、県内企業の新しい仕事へ変換する。</p>
+</blockquote>
+<h2 id="s101">10.4 Solution：解決策</h2>
+<ul>
+<li>多言語観光メディア</li>
+<li>繁体字SEO</li>
+<li>英語圏向け高付加価値ページ</li>
+<li>Instagram・動画運用</li>
+<li>快適度スコア</li>
+<li>観光地キャパシティ台帳</li>
+<li>需要急増アラート</li>
+<li>自治体ダッシュボード</li>
+<li>事業者向け多言語・SNS・動画パッケージ</li>
+<li>Travel Safety / 防災連携</li>
+<li>県内企業リソース活用マップ</li>
+</ul>
+<h2 id="s102">10.5 Channels：流入チャネル</h2>
+<ul>
+<li>Google検索</li>
+<li>AI検索</li>
+<li>Instagram</li>
+<li>YouTube Shorts</li>
+<li>TikTok</li>
+<li>Google Maps</li>
+<li>観光事業者リンク</li>
+<li>自治体・観光協会リンク</li>
+<li>QRコード</li>
+<li>宿泊施設・観光案内所</li>
+<li>海外媒体出稿</li>
+</ul>
+<h2 id="s103">10.6 Revenue Streams：収益源</h2>
+<ul>
+<li>自治体調査・実証費</li>
+<li>自治体DX構築費</li>
+<li>ダッシュボード月額</li>
+<li>観光需要レポート</li>
+<li>観光地キャパシティ調査</li>
+<li>事業者ページ制作</li>
+<li>SNS運用</li>
+<li>動画制作</li>
+<li>多言語翻訳・監修</li>
+<li>広告運用</li>
+<li>補助金活用支援</li>
+<li>地域キャンペーン設計</li>
+<li>混雑期オペレーション設計</li>
+<li>防災・避難マップ連携</li>
+</ul>
+<h2 id="s104">10.7 Cost Structure：費用構造</h2>
+<ul>
+<li>社内企画工数</li>
+<li>Web制作工数</li>
+<li>記事制作・編集</li>
+<li>翻訳・監修</li>
+<li>写真・動画撮影</li>
+<li>SNS運用</li>
+<li>データ分析</li>
+<li>営業・自治体折衝</li>
+<li>システム運用</li>
+<li>サーバー・ツール</li>
+<li>外部専門家</li>
+<li>法務・規約整備</li>
+</ul>
+<h2 id="s105">10.8 Key Metrics：重要指標</h2>
+<ul>
+<li>公開ページ数</li>
+<li>インデックス数</li>
+<li>検索表示回数</li>
+<li>検索クリック数</li>
+<li>繁体字流入数</li>
+<li>国・地域別アクセス</li>
+<li>SNS保存数</li>
+<li>地域別検索シェア</li>
+<li>快適度スコア対象地域数</li>
+<li>需要アラート件数</li>
+<li>代替導線クリック率</li>
+<li>事業者掲載数</li>
+<li>有料契約数</li>
+<li>自治体相談件数</li>
+<li>県内企業参画数</li>
+<li>地元事業者への送客クリック</li>
+</ul>
+<h2 id="s106">10.9 Unfair Advantage：優位性</h2>
+<ul>
+<li>山形県内にいる地域密着性</li>
+<li>Web・SNS・動画・AI・マップ・システムを一体で扱える</li>
+<li>自社内に避難マップ改修の可能性がある</li>
+<li>観光メディアではなく需要制御インフラとして設計している</li>
+<li>県内企業への業務波及まで設計できる</li>
+<li>ロングテールSEO、繁体字、AI検索対応を同時に扱う</li>
+</ul>
+<hr />
+  </div>
+</div>
+
+<div class="section-block" id="s107">
+  <div class="section-header" onclick="toggleSection(this)">
+    <h1>11. サービス構成</h1>
+    <span class="toggle-icon open">▲</span>
+  </div>
+  <div class="section-body">
+    <h2 id="s108">11.1 旅行者向け機能</h2>
+<ul>
+<li>英語・繁体字観光ガイド</li>
+<li>地域別ページ</li>
+<li>テーマ別ページ</li>
+<li>季節別ページ</li>
+<li>モデルコース</li>
+<li>不自駕ルート</li>
+<li>Googleマップ連携</li>
+<li>快適度スコア</li>
+<li>混雑しやすい時間帯</li>
+<li>代替体験提案</li>
+<li>Responsible Travel</li>
+<li>Travel Safety</li>
+</ul>
+<h2 id="s109">11.2 自治体向け機能</h2>
+<ul>
+<li>地域別検索シェア</li>
+<li>国・言語別アクセス</li>
+<li>需要急増アラート</li>
+<li>観光地キャパシティ台帳</li>
+<li>快適度スコア管理</li>
+<li>代替導線分析</li>
+<li>多言語整備率</li>
+<li>事業者掲載状況</li>
+<li>県内企業リソース活用状況</li>
+<li>月次レポート</li>
+<li>年度報告書</li>
+</ul>
+<h2 id="s110">11.3 観光事業者向け機能</h2>
+<ul>
+<li>自社ページ閲覧数</li>
+<li>国別アクセス</li>
+<li>問い合わせ数</li>
+<li>予約導線クリック</li>
+<li>Googleマップクリック</li>
+<li>SNS露出</li>
+<li>改善提案</li>
+<li>多言語整備チェック</li>
+<li>補助金対象項目整理</li>
+</ul>
+<h2 id="s111">11.4 県内企業向け機能</h2>
+<ul>
+<li>観光需要から発生する業務の可視化</li>
+<li>業種別参画機会</li>
+<li>混雑期オペレーション案件</li>
+<li>多言語・動画・印刷・警備・交通・清掃などの業務予測</li>
+<li>コンソーシアム参画機会</li>
+</ul>
+<hr />
+  </div>
+</div>
+
+<div class="section-block" id="s112">
+  <div class="section-header" onclick="toggleSection(this)">
+    <h1>12. 観光需要予測・導線制御の仕組み</h1>
+    <span class="toggle-icon open">▲</span>
+  </div>
+  <div class="section-body">
+    <h2 id="s113">12.1 需要予測の基本思想</h2>
+<p>本事業における需要予測は、来訪者数を正確に断定するものではない。検索表示、ページ閲覧、SNS保存、広告反応、予約導線クリック、交通ページ閲覧、現地ヒアリングを組み合わせて、需要の予兆を把握する。</p>
+<p>初期は予測精度よりも早期検知を重視し、実来訪データとの照合により段階的に精度を高める。</p>
+<h2 id="s114">12.2 使用するデータ</h2>
+<ul>
+<li>Google Search Console</li>
+<li>Google Analytics</li>
+<li>Instagram Insights</li>
+<li>YouTube / TikTok反応</li>
+<li>Google Mapsクリック</li>
+<li>予約・問い合わせ導線クリック</li>
+<li>事業者ヒアリング</li>
+<li>自治体・観光協会の実測値</li>
+<li>季節・天候・イベント情報</li>
+<li>交通規制情報</li>
+</ul>
+<h2 id="s115">12.3 需要急増アラート</h2>
+<h3 id="s116">レベル設計</h3>
+<table>
+<thead>
+<tr>
+<th>レベル</th>
+<th>条件例</th>
+<th>通知先</th>
+<th>対応</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Level 1 注意</td>
+<td>閲覧数が前月比130%</td>
+<td>社内</td>
+<td>記事更新・内部リンク調整</td>
+</tr>
+<tr>
+<td>Level 2 関心上昇</td>
+<td>前月比160%、SNS保存増</td>
+<td>観光協会・事業者</td>
+<td>交通・営業時間確認</td>
+</tr>
+<tr>
+<td>Level 3 混雑予兆</td>
+<td>前月比200%、繁忙期接近</td>
+<td>自治体担当</td>
+<td>多言語案内・代替導線強化</td>
+</tr>
+<tr>
+<td>Level 4 受入警戒</td>
+<td>交通規制・予約満杯・検索急増</td>
+<td>自治体・交通・観光協会</td>
+<td>快適度スコア表示、代替地強化</td>
+</tr>
+<tr>
+<td>Level 5 制御検討</td>
+<td>現地混乱・住民影響</td>
+<td>自治体判断</td>
+<td>時間帯予約・交通制御・チケット検討</td>
+</tr>
+</tbody>
+</table>
+<h2 id="s117">12.4 旅行者への制御ではなくナッジ</h2>
+<p>旅行者を強制的に制限するのではなく、混雑予測や快適度スコアを表示し、自然に別時間・別日・別地域を検討してもらう。</p>
+<hr />
+  </div>
+</div>
+
+<div class="section-block" id="s118">
+  <div class="section-header" onclick="toggleSection(this)">
+    <h1>13. 快適度スコアとナッジ設計</h1>
+    <span class="toggle-icon open">▲</span>
+  </div>
+  <div class="section-body">
+    <h2 id="s119">13.1 チケット制より先に快適度スコア</h2>
+<p>チケット制は強制感があり、住民・国内客・事業者の反発を招く可能性がある。最初から入場制限を行うのではなく、まずは快適度スコアによって旅行者が自ら判断できる状態をつくる。</p>
+<h2 id="s120">13.2 表示案</h2>
+<table>
+<thead>
+<tr>
+<th>スコア</th>
+<th>表示</th>
+<th>意味</th>
+<th>導線</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0〜50</td>
+<td>Comfortable</td>
+<td>快適</td>
+<td>今おすすめ</td>
+</tr>
+<tr>
+<td>51〜80</td>
+<td>Moderate</td>
+<td>やや混雑</td>
+<td>時間に余裕を持つ</td>
+</tr>
+<tr>
+<td>81〜100</td>
+<td>Crowded</td>
+<td>混雑</td>
+<td>早朝・夕方を提案</td>
+</tr>
+<tr>
+<td>101〜120</td>
+<td>Very Crowded</td>
+<td>非常に混雑</td>
+<td>代替地を強く表示</td>
+</tr>
+<tr>
+<td>121〜</td>
+<td>Over Capacity</td>
+<td>受入容量超過傾向</td>
+<td>別日・別地域・宿泊導線へ誘導</td>
+</tr>
+</tbody>
+</table>
+<h2 id="s121">13.3 快適度スコアの仮算出式</h2>
+<p>快適度スコアは、初期段階では実測混雑人数を直接保証する数値ではなく、検索・閲覧・SNS・季節・交通制約から算出する「予想快適度」として扱う。</p>
+<h3 id="s122">v1：初期試算式</h3>
+<pre><code class="language-text">快適度スコア = 
+  基礎季節係数
++ 曜日・祝日係数
++ 検索急増係数
++ ページ閲覧急増係数
++ SNS保存・投稿密度係数
++ 交通制約係数
++ 受入容量係数
+</code></pre>
+<h3 id="s123">係数例</h3>
+<table>
+<thead>
+<tr>
+<th>要素</th>
+<th>指標例</th>
+<th style="text-align: right;">加点例</th>
+<th>意味</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>基礎季節係数</td>
+<td>銀山温泉の冬、蔵王の樹氷期、月山の春スキー期</td>
+<td style="text-align: right;">+10〜30</td>
+<td>季節的に需要が高い</td>
+</tr>
+<tr>
+<td>曜日・祝日係数</td>
+<td>土日祝、連休、春節、台湾・香港の連休</td>
+<td style="text-align: right;">+10〜25</td>
+<td>訪問が集中しやすい</td>
+</tr>
+<tr>
+<td>検索急増係数</td>
+<td>関連キーワード表示回数が前月比150%以上</td>
+<td style="text-align: right;">+10〜25</td>
+<td>旅行前関心が高まっている</td>
+</tr>
+<tr>
+<td>ページ閲覧急増係数</td>
+<td>対象ページPVが前月比150%以上</td>
+<td style="text-align: right;">+10〜25</td>
+<td>情報収集が増えている</td>
+</tr>
+<tr>
+<td>SNS係数</td>
+<td>保存数、位置情報投稿、リール反応が増加</td>
+<td style="text-align: right;">+5〜20</td>
+<td>SNS起点の来訪予兆</td>
+</tr>
+<tr>
+<td>交通制約係数</td>
+<td>駐車場不足、マイカー規制、シャトル必須</td>
+<td style="text-align: right;">+10〜25</td>
+<td>受入ボトルネックがある</td>
+</tr>
+<tr>
+<td>受入容量係数</td>
+<td>キャパシティ台帳上の上限に近い</td>
+<td style="text-align: right;">+10〜30</td>
+<td>物理的に混雑しやすい</td>
+</tr>
+</tbody>
+</table>
+<h3 id="s124">算出例：冬季の銀山温泉</h3>
+<pre><code class="language-text">冬季係数 +30
+土日祝係数 +20
+繁体字検索急増 +20
+ページ閲覧急増 +15
+SNS保存増加 +10
+交通制約あり +20
+合計 = 115
+表示 = Very Crowded
+</code></pre>
+<p>この場合、旅行者には「非常に混雑が予想されるため、宿泊利用・平日午前・周辺地域の代替体験を検討してください」と表示する。</p>
+<h3 id="s125">段階的な精度向上</h3>
+<table>
+<thead>
+<tr>
+<th>段階</th>
+<th>使用データ</th>
+<th>目的</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>v1</td>
+<td>検索・閲覧・季節・曜日</td>
+<td>予兆を早く掴む</td>
+</tr>
+<tr>
+<td>v2</td>
+<td>SNS・広告・Googleマップクリック</td>
+<td>関心の質を補正する</td>
+</tr>
+<tr>
+<td>v3</td>
+<td>交通・宿泊・現地ヒアリング</td>
+<td>実来訪とのズレを補正する</td>
+</tr>
+<tr>
+<td>v4</td>
+<td>予約・シャトル・現地カウント</td>
+<td>準リアルタイム化を検討する</td>
+</tr>
+</tbody>
+</table>
+<p>初期段階では「正確な人数予測」よりも、「需要急増の早期検知」と「代替導線の提示」を優先する。</p>
+<h2 id="s126">13.4 重要な設計思想</h2>
+<ul>
+<li>「行くな」ではなく「より快適な選択肢があります」と伝える</li>
+<li>ネガティブ表示だけで終わらせない</li>
+<li>必ず代替体験を提示する</li>
+<li>混雑率ではなく快適度として表示する</li>
+<li>初期は旅行者公開ではなく、管理画面内で試験運用してもよい</li>
+</ul>
+<h2 id="s127">13.5 代替提案は「地域」ではなく「体験」で出す</h2>
+<h3 id="s128">銀山温泉が混雑している場合</h3>
+<table>
+<thead>
+<tr>
+<th>求めている体験</th>
+<th>代替提案</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>雪景色の温泉街</td>
+<td>蔵王温泉、赤湯温泉、上山温泉</td>
+</tr>
+<tr>
+<td>レトロな街並み</td>
+<td>上山温泉、文翔館、大石田</td>
+</tr>
+<tr>
+<td>写真映え</td>
+<td>山寺、文翔館、雪の山形市</td>
+</tr>
+<tr>
+<td>静かな宿泊</td>
+<td>尾花沢・大石田・村山方面</td>
+</tr>
+<tr>
+<td>混雑回避</td>
+<td>平日午前、宿泊利用、別季節</td>
+</tr>
+</tbody>
+</table>
+<h3 id="s129">蔵王が混雑している場合</h3>
+<table>
+<thead>
+<tr>
+<th>求めている体験</th>
+<th>代替提案</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>雪体験</td>
+<td>月山春スキー、西川、銀山以外の雪景色</td>
+</tr>
+<tr>
+<td>温泉</td>
+<td>上山温泉、赤湯温泉、小野川温泉</td>
+</tr>
+<tr>
+<td>食</td>
+<td>山形市、米沢、南陽</td>
+</tr>
+<tr>
+<td>高付加価値滞在</td>
+<td>周辺宿泊・上山・山形市飲食</td>
+</tr>
+</tbody>
+</table>
+<h2 id="s130">13.6 チケット制・予約制の位置づけ</h2>
+<p>チケット制は最終手段である。</p>
+<h3 id="s131">段階</h3>
+<ol>
+<li>快適度スコア表示</li>
+<li>代替導線提示</li>
+<li>時間帯分散推奨</li>
+<li>シャトル・交通制御連携</li>
+<li>必要に応じて予約・チケット制</li>
+</ol>
+<hr />
+  </div>
+</div>
+
+<div class="section-block" id="s132">
+  <div class="section-header" onclick="toggleSection(this)">
+    <h1>14. 観光地キャパシティ台帳</h1>
+    <span class="toggle-icon open">▲</span>
+  </div>
+  <div class="section-body">
+    <h2 id="s133">14.1 目的</h2>
+<p>観光地ごとの受入容量を可視化し、検索・SNS・AI上の需要データと照合することで、混雑予兆を早期に把握し、分散・交通・警備・案内・多言語整備の判断材料にする。</p>
+<h2 id="s134">14.2 台帳項目</h2>
+<h3 id="s135">基本情報</h3>
+<ul>
+<li>観光地名</li>
+<li>管理者</li>
+<li>担当部署</li>
+<li>連絡先</li>
+<li>公式サイト</li>
+<li>対応言語</li>
+<li>最終更新日</li>
+</ul>
+<h3 id="s136">物理キャパシティ</h3>
+<ul>
+<li>駐車場台数</li>
+<li>バス乗降場所</li>
+<li>シャトルバス有無</li>
+<li>トイレ数</li>
+<li>飲食店数</li>
+<li>宿泊室数</li>
+<li>滞在スペース</li>
+<li>道路幅</li>
+<li>歩行者導線</li>
+<li>夜間照明</li>
+<li>除雪体制</li>
+</ul>
+<h3 id="s137">運用キャパシティ</h3>
+<ul>
+<li>1時間あたり快適人数</li>
+<li>1日あたり快適人数</li>
+<li>受入限界人数</li>
+<li>雪・雨・夜間時の制限</li>
+<li>係員配置</li>
+<li>多言語案内可否</li>
+<li>救急・警備対応</li>
+</ul>
+<h3 id="s138">地域影響</h3>
+<ul>
+<li>住民生活道路との重なり</li>
+<li>騒音リスク</li>
+<li>ゴミ問題</li>
+<li>私有地侵入リスク</li>
+<li>文化的配慮</li>
+<li>信仰上の配慮</li>
+<li>自然環境への負荷</li>
+</ul>
+<h3 id="s139">デジタル需要</h3>
+<ul>
+<li>月間閲覧数</li>
+<li>検索表示回数</li>
+<li>SNS保存数</li>
+<li>言語別アクセス</li>
+<li>国別アクセス</li>
+<li>前月比</li>
+<li>急増率</li>
+<li>快適度スコア</li>
+</ul>
+<h2 id="s140">14.3 受入容量の考え方</h2>
+<p>観光地のキャパシティは、最も細いボトルネックで決まる。</p>
+<p>例：</p>
+<ul>
+<li>銀山温泉：道路、駐車場、シャトル、歩行空間</li>
+<li>月山：駐車場、天候、アクセス道路、安全対応</li>
+<li>蔵王：宿泊、ロープウェイ、駐車場、道路</li>
+<li>出羽三山：信仰性、登山安全、ガイド体制</li>
+</ul>
+<hr />
+  </div>
+</div>
+
+<div class="section-block" id="s141">
+  <div class="section-header" onclick="toggleSection(this)">
+    <h1>15. 地域別制御・成長シナリオ</h1>
+    <span class="toggle-icon open">▲</span>
+  </div>
+  <div class="section-body">
+    <h2 id="s142">15.1 地域別役割分担</h2>
+<table>
+<thead>
+<tr>
+<th>地域</th>
+<th>役割</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>蔵王</td>
+<td>国際認知・雪・温泉の入口</td>
+</tr>
+<tr>
+<td>銀山温泉</td>
+<td>映える温泉街・制御対象</td>
+</tr>
+<tr>
+<td>山形市</td>
+<td>飲食・宿泊・交通のハブ</td>
+</tr>
+<tr>
+<td>月山・西川</td>
+<td>春〜初夏スキー・自然</td>
+</tr>
+<tr>
+<td>南陽・赤湯</td>
+<td>ワイン・温泉・大人旅</td>
+</tr>
+<tr>
+<td>長井</td>
+<td>不自駕・ローカルまち歩き</td>
+</tr>
+<tr>
+<td>米沢</td>
+<td>食・歴史・高単価</td>
+</tr>
+<tr>
+<td>上山</td>
+<td>蔵王分散・温泉・ヘルスツーリズム</td>
+</tr>
+<tr>
+<td>庄内・出羽三山</td>
+<td>精神文化・長期滞在</td>
+</tr>
+</tbody>
+</table>
+<h2 id="s143">15.2 銀山温泉</h2>
+<h3 id="s144">予測される波</h3>
+<ul>
+<li>冬の雪景色</li>
+<li>SNS映え</li>
+<li>台湾・香港・タイからの繁体字・SNS需要</li>
+<li>日帰り客集中</li>
+<li>駐車場・シャトルバス問題</li>
+</ul>
+<h3 id="s145">制御策</h3>
+<ul>
+<li>快適度スコア表示</li>
+<li>マイカー規制・シャトル情報の多言語化</li>
+<li>宿泊者向け導線と日帰り導線の分離</li>
+<li>大石田・尾花沢・村山への回遊導線</li>
+<li>代替雪景色コンテンツ提示</li>
+<li>閲覧急増時の自治体・観光協会通知</li>
+</ul>
+<h2 id="s146">15.3 蔵王</h2>
+<h3 id="s147">予測される波</h3>
+<ul>
+<li>National Geographic文脈</li>
+<li>星野リゾート進出</li>
+<li>樹氷・温泉・スキー</li>
+<li>冬季集中</li>
+<li>宿泊価格上昇</li>
+</ul>
+<h3 id="s148">制御策</h3>
+<ul>
+<li>山形市飲食・上山・赤湯への回遊</li>
+<li>樹氷以外の蔵王体験の発掘</li>
+<li>冬以外の蔵王ページ強化</li>
+<li>月山春スキーへの季節接続</li>
+<li>FIT向けと高付加価値層向けページの分離</li>
+</ul>
+<h2 id="s149">15.4 月山・西川</h2>
+<h3 id="s150">予測される波</h3>
+<ul>
+<li>春〜初夏スキー</li>
+<li>欧米豪ニッチスキーヤー</li>
+<li>国内在住外国人</li>
+<li>台湾・香港の「春でも雪」需要</li>
+</ul>
+<h3 id="s151">制御策</h3>
+<ul>
+<li>交通・装備・天候・安全情報</li>
+<li>西川・寒河江・鶴岡への宿泊・食導線</li>
+<li>上級者向けと観光客向けを分ける</li>
+<li>山菜・ブナ林・自然体験と組み合わせる</li>
+</ul>
+<h2 id="s152">15.5 南陽・赤湯</h2>
+<h3 id="s153">成長シナリオ</h3>
+<p>1年目：ワイン・赤湯温泉記事<br />
+2年目：ワイナリー事業者ページ・不自駕モデルコース<br />
+3年目：台湾・香港向けワイン温泉キャンペーン</p>
+<h2 id="s154">15.6 長井</h2>
+<h3 id="s155">成長シナリオ</h3>
+<p>1年目：不自駕まち歩き記事<br />
+2年目：フラワー長井線・商店街連携<br />
+3年目：ローカル鉄道旅・水辺観光パッケージ</p>
+<h2 id="s156">15.7 米沢</h2>
+<h3 id="s157">成長シナリオ</h3>
+<p>1年目：米沢牛・上杉文化ページ<br />
+2年目：小野川温泉・工芸・食の高単価ルート<br />
+3年目：食と歴史の高付加価値ツアー化</p>
+<hr />
+  </div>
+</div>
+
+<div class="section-block" id="s158">
+  <div class="section-header" onclick="toggleSection(this)">
+    <h1>16. 地域経済循環設計</h1>
+    <span class="toggle-icon open">▲</span>
+  </div>
+  <div class="section-body">
+    <h2 id="s159">16.1 観光需要を県内企業の仕事に変換する</h2>
+<p>観光客が増えると、宿泊・飲食だけでなく、多様な業務が発生する。</p>
+<ul>
+<li>警備・交通誘導</li>
+<li>シャトルバス運行</li>
+<li>駐車場管理</li>
+<li>多言語案内</li>
+<li>QR案内</li>
+<li>看板・誘導サイン</li>
+<li>Web・SNS告知</li>
+<li>動画制作</li>
+<li>翻訳・監修</li>
+<li>清掃・ゴミ対応</li>
+<li>観光案内所増員</li>
+<li>問い合わせ対応</li>
+<li>データ分析</li>
+<li>予約システム運用</li>
+</ul>
+<p>これらを県外企業に依存するのではなく、県内企業が参画しやすい形で業務設計する。</p>
+<h2 id="s160">16.2 業務分解表</h2>
+<table>
+<thead>
+<tr>
+<th>観光需要の変化</th>
+<th>必要になる対応</th>
+<th>発注先になり得る県内業種</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>閲覧数が急増</td>
+<td>多言語ページ更新、FAQ追加</td>
+<td>Web、翻訳、編集</td>
+</tr>
+<tr>
+<td>SNS保存が急増</td>
+<td>動画追加、写真撮影、混雑案内</td>
+<td>映像、写真、SNS運用</td>
+</tr>
+<tr>
+<td>日帰り客が集中</td>
+<td>駐車場管理、シャトル、警備</td>
+<td>警備、交通、バス</td>
+</tr>
+<tr>
+<td>外国人比率が上昇</td>
+<td>多言語看板、案内スタッフ</td>
+<td>印刷、看板、人材、大学</td>
+</tr>
+<tr>
+<td>夜間来訪が増加</td>
+<td>照明、警備、宿泊誘導</td>
+<td>警備、設備、宿泊</td>
+</tr>
+<tr>
+<td>交通不安が増加</td>
+<td>駅起点ルート、タクシー案内</td>
+<td>交通、タクシー、旅行会社</td>
+</tr>
+<tr>
+<td>食の検索が増加</td>
+<td>飲食店ページ、メニュー翻訳</td>
+<td>飲食、翻訳、撮影</td>
+</tr>
+<tr>
+<td>冬季需要が増加</td>
+<td>除雪、雪道案内、装備案内</td>
+<td>建設、交通、レンタル</td>
+</tr>
+<tr>
+<td>混雑率が上昇</td>
+<td>代替ルート、快適度表示</td>
+<td>IT、観光協会、自治体</td>
+</tr>
+<tr>
+<td>災害・悪天候</td>
+<td>安全情報、公式リンク、多言語通知</td>
+<td>防災、Web、翻訳</td>
+</tr>
+</tbody>
+</table>
+<h2 id="s161">16.3 県内リソース活用マップ</h2>
+<p>各地域で需要が増えた際に、どの業種が必要になるかを事前に整理する。</p>
+<h3 id="s162">例：銀山温泉</h3>
+<ul>
+<li>警備会社</li>
+<li>バス会社</li>
+<li>タクシー会社</li>
+<li>印刷会社</li>
+<li>Web会社</li>
+<li>翻訳者</li>
+<li>清掃会社</li>
+<li>周辺飲食店</li>
+<li>宿泊施設</li>
+</ul>
+<h3 id="s163">例：月山</h3>
+<ul>
+<li>スキー場</li>
+<li>交通会社</li>
+<li>宿泊施設</li>
+<li>飲食店</li>
+<li>ガイド</li>
+<li>アウトドア事業者</li>
+<li>映像制作</li>
+<li>安全情報監修者</li>
+</ul>
+<h2 id="s164">16.4 地域経済循環KPI</h2>
+<ul>
+<li>県内企業への発注額</li>
+<li>県内事業者の掲載数</li>
+<li>地元事業者への送客クリック数</li>
+<li>宿泊導線クリック数</li>
+<li>飲食店導線クリック数</li>
+<li>体験予約クリック数</li>
+<li>補助金活用事業者数</li>
+<li>多言語整備済み事業者数</li>
+<li>県内企業参画数</li>
+<li>外部委託比率の低下</li>
+</ul>
+<h2 id="s165">16.5 コンソーシアム構想</h2>
+<p>将来的には、以下のような「山形インバウンド受入体制コンソーシアム」を構築できる。</p>
+<ul>
+<li>デジコンキューブ</li>
+<li>警備会社</li>
+<li>バス・タクシー会社</li>
+<li>翻訳者・大学</li>
+<li>映像制作会社</li>
+<li>印刷会社</li>
+<li>観光協会</li>
+<li>旅館組合</li>
+<li>飲食店組合</li>
+<li>商工会</li>
+<li>人材会社</li>
+<li>清掃会社</li>
+</ul>
+<p>ただし、行政提案では「特定企業に仕事を割り振る」と見えないよう、公平性・透明性に配慮する。</p>
+<hr />
+  </div>
+</div>
+
+<div class="section-block" id="s166">
+  <div class="section-header" onclick="toggleSection(this)">
+    <h1>17. 自治体・事業者・県内企業の負担設計</h1>
+    <span class="toggle-icon open">▲</span>
+  </div>
+  <div class="section-body">
+    <h2 id="s167">17.1 基本思想</h2>
+<p><strong>基礎インフラは自治体負担。個別強化は事業者負担。高度プロモーションは共同負担。</strong></p>
+<h2 id="s168">17.2 自治体が負担する部分</h2>
+<ul>
+<li>地域全体ページ</li>
+<li>基本観光情報</li>
+<li>多言語基礎ページ</li>
+<li>地域別モデルコース</li>
+<li>交通・安全情報</li>
+<li>快適度スコア基盤</li>
+<li>需要アラート</li>
+<li>キャパシティ台帳</li>
+<li>ダッシュボード</li>
+<li>月次レポート</li>
+<li>小規模事業者の基本掲載枠</li>
+</ul>
+<h2 id="s169">17.3 事業者が負担する部分</h2>
+<ul>
+<li>プレミアム紹介ページ</li>
+<li>写真撮影</li>
+<li>ショート動画</li>
+<li>SNS運用</li>
+<li>予約導線強化</li>
+<li>Googleマップ整備</li>
+<li>多言語メニュー制作</li>
+<li>広告出稿</li>
+</ul>
+<h2 id="s170">17.4 共同負担する部分</h2>
+<ul>
+<li>地域キャンペーン</li>
+<li>ワイン旅特集</li>
+<li>雪景色特集</li>
+<li>山形不自駕特集</li>
+<li>台湾・香港向け媒体出稿</li>
+<li>インフルエンサー招聘</li>
+<li>QRコード設置</li>
+</ul>
+<h2 id="s171">17.5 負担割合例</h2>
+<table>
+<thead>
+<tr>
+<th>項目</th>
+<th style="text-align: right;">自治体</th>
+<th style="text-align: right;">事業者</th>
+<th>備考</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>基本掲載</td>
+<td style="text-align: right;">100%</td>
+<td style="text-align: right;">0%</td>
+<td>地域全体の受け皿として自治体負担</td>
+</tr>
+<tr>
+<td>多言語基本ページ</td>
+<td style="text-align: right;">70%</td>
+<td style="text-align: right;">30%</td>
+<td>補助金活用しやすい</td>
+</tr>
+<tr>
+<td>写真・動画強化</td>
+<td style="text-align: right;">30%</td>
+<td style="text-align: right;">70%</td>
+<td>個別便益が大きい</td>
+</tr>
+<tr>
+<td>SNS運用</td>
+<td style="text-align: right;">0〜30%</td>
+<td style="text-align: right;">70〜100%</td>
+<td>事業者契約が基本</td>
+</tr>
+<tr>
+<td>地域特集キャンペーン</td>
+<td style="text-align: right;">50%</td>
+<td style="text-align: right;">50%</td>
+<td>観光協会・商工会連携</td>
+</tr>
+<tr>
+<td>防災・安全情報</td>
+<td style="text-align: right;">100%</td>
+<td style="text-align: right;">0%</td>
+<td>公共インフラ</td>
+</tr>
+<tr>
+<td>データダッシュボード</td>
+<td style="text-align: right;">100%</td>
+<td style="text-align: right;">0%</td>
+<td>自治体・観光協会向け</td>
+</tr>
+<tr>
+<td>予約・送客導線</td>
+<td style="text-align: right;">20%</td>
+<td style="text-align: right;">80%</td>
+<td>個別成果に近い</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="s172">17.6 自治体が導入する理由：導入前後の比較</h2>
+<p>自治体担当者が上司・庁内・議会に説明しやすくするため、本事業は「何が変わるのか」を導入前後で明確に示す必要がある。</p>
+<table>
+<thead>
+<tr>
+<th>項目</th>
+<th>導入前</th>
+<th>導入後</th>
+<th>自治体にとっての価値</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>需要把握</td>
+<td>観光客が増えてから現地混雑で気づく</td>
+<td>検索・閲覧・SNS反応で事前に予兆を把握</td>
+<td>先手の対策が可能</td>
+</tr>
+<tr>
+<td>人気集中</td>
+<td>蔵王・銀山など既存有名地に偏る</td>
+<td>月山・南陽・長井・米沢・上山・庄内へ分散誘導</td>
+<td>地域間格差を抑えられる</td>
+</tr>
+<tr>
+<td>混雑対応</td>
+<td>苦情・交通混乱が起きてから警備や規制を検討</td>
+<td>快適度スコアとアラートで段階的に対応</td>
+<td>対応コストと住民負荷を抑制</td>
+</tr>
+<tr>
+<td>事業者支援</td>
+<td>各事業者が個別に多言語化・SNS対応</td>
+<td>地域導線に沿ってページ・撮影・翻訳を整備</td>
+<td>補助金や支援策の効果が見えやすい</td>
+</tr>
+<tr>
+<td>予算説明</td>
+<td>「観光PR」として効果が見えにくい</td>
+<td>検索シェア、アクセス、送客、地域波及を数値化</td>
+<td>稟議・予算化の根拠になる</td>
+</tr>
+<tr>
+<td>県内企業活用</td>
+<td>必要業務が発生してから場当たり的に発注</td>
+<td>警備・交通・印刷・翻訳・映像・清掃などを事前に業務分解</td>
+<td>地域経済循環を設計できる</td>
+</tr>
+<tr>
+<td>国内客・住民配慮</td>
+<td>観光客増加により利用余地が圧迫される</td>
+<td>快適度表示・代替導線・時間分散で共存設計</td>
+<td>反発やオーバーツーリズムを抑える</td>
+</tr>
+</tbody>
+</table>
+<h3 id="s173">因果チェーン</h3>
+<pre><code class="language-text">現状：海外関心の増加
+  → 銀山・蔵王などに集中
+  → 混雑・苦情・交通対応が後手
+  → 現地コスト増・満足度低下
+
+導入後：海外関心を検索・SNSで早期把握
+  → 快適度スコアと需要アラートで予兆を共有
+  → 代替地域・別時間・宿泊導線へ分散
+  → 県内事業者への業務波及と地域消費拡大
+</code></pre>
+<p>自治体にとっての導入理由は、「サイトを作ること」ではなく、観光需要を政策判断・受入整備・地域経済循環へ変換できることである。</p>
+<h2 id="s174">17.7 補助金活用を前提にした負担軽減設計</h2>
+<p>YamaFlowは、自治体・観光事業者の自己負担を下げるため、国・県の補助制度と組み合わせる前提で商品設計する。</p>
+<h3 id="s175">国：観光需要分散のための地域観光資源のコンテンツ化促進事業</h3>
+<p>想定される接続テーマは以下である。</p>
+<ul>
+<li>月山春〜初夏スキー、南陽ワイン、長井まち歩き、米沢食文化などの新規コンテンツ造成</li>
+<li>繁体字・英語ページ、SNS、動画、インフルエンサー、予約導線の整備</li>
+<li>ガストロノミー、ワイン、日本酒、米沢牛、雪国の食文化などの高付加価値化</li>
+<li>蔵王・銀山温泉への集中を抑え、周辺地域へ分散させるモデルコース整備</li>
+<li>観光需要分散レポート、快適度スコア、キャパシティ台帳の実証</li>
+</ul>
+<p>令和8年度公募は締切済みであるため、今年度は次回公募に向けた実績づくりを行う。具体的には、2026年4月〜9月にMVPと初期データを整備し、2026年10月〜12月に自治体・DMO・観光事業者と申請テーマを固め、2027年2月〜3月頃の次回公募に備える。</p>
+<h3 id="s176">県：山形県インバウンド受入環境整備支援事業費補助金</h3>
+<p>県内観光事業者向けには、案内表示や自社Webサイト等の多言語化、自動翻訳機等の導入などの補助制度を活用できる可能性がある。</p>
+<p>YamaFlow側の商品としては、以下を補助金活用パッケージ化する。</p>
+<p>補助金活用前提の想定価格</p>
+<table>
+<thead>
+<tr>
+<th>パッケージ</th>
+<th>内容</th>
+<th style="text-align: right;">想定価格</th>
+<th style="text-align: right;">補助金活用後の自己負担イメージ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>多言語受入ライト</td>
+<td>英語・繁体字紹介文、Googleマップ整備、基本写真</td>
+<td style="text-align: right;">30万〜50万円</td>
+<td style="text-align: right;">15万〜25万円</td>
+</tr>
+<tr>
+<td>多言語ページ標準</td>
+<td>専用紹介ページ、写真撮影、FAQ、予約導線</td>
+<td style="text-align: right;">60万〜100万円</td>
+<td style="text-align: right;">30万〜50万円</td>
+</tr>
+<tr>
+<td>SNS・動画強化</td>
+<td>ショート動画、Instagram投稿、施設紹介素材</td>
+<td style="text-align: right;">50万〜120万円</td>
+<td style="text-align: right;">25万〜60万円</td>
+</tr>
+<tr>
+<td>受入環境強化</td>
+<td>多言語案内、メニュー翻訳、QR案内、Travel Safety</td>
+<td style="text-align: right;">50万〜150万円</td>
+<td style="text-align: right;">25万〜75万円</td>
+</tr>
+</tbody>
+</table>
+<p>補助金は採択・交付決定前の着手が対象外になる場合があるため、営業時には必ず「発注・契約・支出のタイミング」を確認する。YamaFlowは制作だけでなく、補助対象になり得る整備内容の整理、見積、実施計画、成果レポートの作成支援まで担う。</p>
+<hr />
+  </div>
+</div>
+
+<div class="section-block" id="s177">
+  <div class="section-header" onclick="toggleSection(this)">
+    <h1>18. 収益モデル</h1>
+    <span class="toggle-icon open">▲</span>
+  </div>
+  <div class="section-body">
+    <h2 id="s178">18.1 収益の柱</h2>
+<ol>
+<li>自治体向け調査・実証</li>
+<li>自治体向けダッシュボード・運用</li>
+<li>観光地キャパシティ調査</li>
+<li>需要予測レポート</li>
+<li>事業者向け制作</li>
+<li>SNS・動画・広告運用</li>
+<li>補助金活用支援</li>
+<li>混雑期オペレーション設計</li>
+<li>県内企業連携パッケージ</li>
+<li>将来的な送客・予約手数料</li>
+</ol>
+<h2 id="s179">18.2 自治体向け</h2>
+<table>
+<thead>
+<tr>
+<th>商品</th>
+<th style="text-align: right;">価格目安</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>調査・設計業務</td>
+<td style="text-align: right;">100万〜300万円</td>
+</tr>
+<tr>
+<td>観光地キャパシティ台帳</td>
+<td style="text-align: right;">300万〜800万円</td>
+</tr>
+<tr>
+<td>実証事業</td>
+<td style="text-align: right;">500万〜1,000万円</td>
+</tr>
+<tr>
+<td>自治体ダッシュボード初期導入</td>
+<td style="text-align: right;">500万〜1,500万円</td>
+</tr>
+<tr>
+<td>標準導入</td>
+<td style="text-align: right;">1,500万〜3,000万円</td>
+</tr>
+<tr>
+<td>広域導入</td>
+<td style="text-align: right;">3,000万〜8,000万円</td>
+</tr>
+<tr>
+<td>月額運用</td>
+<td style="text-align: right;">30万〜200万円/月</td>
+</tr>
+</tbody>
+</table>
+<h2 id="s180">18.3 事業者向け</h2>
+<table>
+<thead>
+<tr>
+<th>商品</th>
+<th style="text-align: right;">価格目安</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Basic掲載</td>
+<td style="text-align: right;">無料〜月5,000円</td>
+</tr>
+<tr>
+<td>多言語紹介ページ</td>
+<td style="text-align: right;">15万〜30万円</td>
+</tr>
+<tr>
+<td>写真撮影付きページ</td>
+<td style="text-align: right;">30万〜60万円</td>
+</tr>
+<tr>
+<td>動画・SNS付きPremium</td>
+<td style="text-align: right;">50万〜120万円</td>
+</tr>
+<tr>
+<td>SNS運用</td>
+<td style="text-align: right;">月5万〜30万円</td>
+</tr>
+<tr>
+<td>Googleマップ整備</td>
+<td style="text-align: right;">5万〜15万円</td>
+</tr>
+<tr>
+<td>多言語メニュー制作</td>
+<td style="text-align: right;">5万〜30万円</td>
+</tr>
+<tr>
+<td>補助金活用パック</td>
+<td style="text-align: right;">50万〜120万円</td>
+</tr>
+</tbody>
+</table>
+<h2 id="s181">18.4 県内企業連携・オペレーション設計</h2>
+<table>
+<thead>
+<tr>
+<th>商品</th>
+<th style="text-align: right;">価格目安</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>県内リソースマッチングレポート</td>
+<td style="text-align: right;">100万〜300万円</td>
+</tr>
+<tr>
+<td>観光地受入体制設計</td>
+<td style="text-align: right;">300万〜1,000万円</td>
+</tr>
+<tr>
+<td>混雑期オペレーション設計</td>
+<td style="text-align: right;">200万〜800万円</td>
+</tr>
+<tr>
+<td>インバウンド需要対応BPO</td>
+<td style="text-align: right;">月30万〜200万円</td>
+</tr>
+</tbody>
+</table>
+<hr />
+  </div>
+</div>
+
+<div class="section-block" id="s182">
+  <div class="section-header" onclick="toggleSection(this)">
+    <h1>19. 費用計画</h1>
+    <span class="toggle-icon open">▲</span>
+  </div>
+  <div class="section-body">
+    <h2 id="s183">19.1 初期MVP費用</h2>
+<h3 id="s184">実支出</h3>
+<table>
+<thead>
+<tr>
+<th>項目</th>
+<th style="text-align: right;">低め</th>
+<th style="text-align: right;">標準</th>
+<th style="text-align: right;">高め</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ドメイン・サーバー</td>
+<td style="text-align: right;">3万円</td>
+<td style="text-align: right;">5万円</td>
+<td style="text-align: right;">10万円</td>
+</tr>
+<tr>
+<td>有料ツール</td>
+<td style="text-align: right;">5万円</td>
+<td style="text-align: right;">15万円</td>
+<td style="text-align: right;">30万円</td>
+</tr>
+<tr>
+<td>写真・動画撮影交通費</td>
+<td style="text-align: right;">5万円</td>
+<td style="text-align: right;">20万円</td>
+<td style="text-align: right;">50万円</td>
+</tr>
+<tr>
+<td>英語・繁体字チェック</td>
+<td style="text-align: right;">20万円</td>
+<td style="text-align: right;">60万円</td>
+<td style="text-align: right;">150万円</td>
+</tr>
+<tr>
+<td>広告テスト</td>
+<td style="text-align: right;">10万円</td>
+<td style="text-align: right;">30万円</td>
+<td style="text-align: right;">100万円</td>
+</tr>
+<tr>
+<td>素材・テンプレート</td>
+<td style="text-align: right;">3万円</td>
+<td style="text-align: right;">10万円</td>
+<td style="text-align: right;">20万円</td>
+</tr>
+<tr>
+<td>合計</td>
+<td style="text-align: right;">46万円</td>
+<td style="text-align: right;">140万円</td>
+<td style="text-align: right;">360万円</td>
+</tr>
+</tbody>
+</table>
+<h3 id="s185">社内工数原価</h3>
+<table>
+<thead>
+<tr>
+<th>作業</th>
+<th style="text-align: right;">時間</th>
+<th style="text-align: right;">時給</th>
+<th style="text-align: right;">原価</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>事業設計</td>
+<td style="text-align: right;">40h</td>
+<td style="text-align: right;">5,000円</td>
+<td style="text-align: right;">20万円</td>
+</tr>
+<tr>
+<td>キーワード設計</td>
+<td style="text-align: right;">30h</td>
+<td style="text-align: right;">5,000円</td>
+<td style="text-align: right;">15万円</td>
+</tr>
+<tr>
+<td>サイト構成設計</td>
+<td style="text-align: right;">40h</td>
+<td style="text-align: right;">5,000円</td>
+<td style="text-align: right;">20万円</td>
+</tr>
+<tr>
+<td>デザイン</td>
+<td style="text-align: right;">60h</td>
+<td style="text-align: right;">5,000円</td>
+<td style="text-align: right;">30万円</td>
+</tr>
+<tr>
+<td>実装・CMS構築</td>
+<td style="text-align: right;">100h</td>
+<td style="text-align: right;">5,000円</td>
+<td style="text-align: right;">50万円</td>
+</tr>
+<tr>
+<td>記事AI下書き</td>
+<td style="text-align: right;">60h</td>
+<td style="text-align: right;">3,000円</td>
+<td style="text-align: right;">18万円</td>
+</tr>
+<tr>
+<td>記事編集・事実確認</td>
+<td style="text-align: right;">140h</td>
+<td style="text-align: right;">3,000円</td>
+<td style="text-align: right;">42万円</td>
+</tr>
+<tr>
+<td>写真選定・加工</td>
+<td style="text-align: right;">40h</td>
+<td style="text-align: right;">3,000円</td>
+<td style="text-align: right;">12万円</td>
+</tr>
+<tr>
+<td>Instagram設計・投稿</td>
+<td style="text-align: right;">80h</td>
+<td style="text-align: right;">3,000円</td>
+<td style="text-align: right;">24万円</td>
+</tr>
+<tr>
+<td>ショート動画制作</td>
+<td style="text-align: right;">80h</td>
+<td style="text-align: right;">4,000円</td>
+<td style="text-align: right;">32万円</td>
+</tr>
+<tr>
+<td>SEO・解析設定</td>
+<td style="text-align: right;">30h</td>
+<td style="text-align: right;">5,000円</td>
+<td style="text-align: right;">15万円</td>
+</tr>
+<tr>
+<td>営業資料・掲載フォーム</td>
+<td style="text-align: right;">30h</td>
+<td style="text-align: right;">5,000円</td>
+<td style="text-align: right;">15万円</td>
+</tr>
+<tr>
+<td>合計</td>
+<td style="text-align: right;">730h</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">293万円</td>
+</tr>
+</tbody>
+</table>
+<h3 id="s186">初期総費用</h3>
+<table>
+<thead>
+<tr>
+<th>区分</th>
+<th style="text-align: right;">低め</th>
+<th style="text-align: right;">標準</th>
+<th style="text-align: right;">高め</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>実支出</td>
+<td style="text-align: right;">46万円</td>
+<td style="text-align: right;">140万円</td>
+<td style="text-align: right;">360万円</td>
+</tr>
+<tr>
+<td>社内工数原価</td>
+<td style="text-align: right;">200万円</td>
+<td style="text-align: right;">293万円</td>
+<td style="text-align: right;">450万円</td>
+</tr>
+<tr>
+<td>合計</td>
+<td style="text-align: right;">246万円</td>
+<td style="text-align: right;">433万円</td>
+<td style="text-align: right;">810万円</td>
+</tr>
+</tbody>
+</table>
+<h2 id="s187">19.2 月間運用費</h2>
+<h3 id="s188">スモール版</h3>
+<ul>
+<li>ページ数：30〜80</li>
+<li>対象施設：50〜150</li>
+<li>言語：英語＋繁体字の重要ページ</li>
+<li>SNS：週3〜5本</li>
+<li>月間総コスト：35万〜100万円</li>
+</ul>
+<h3 id="s189">標準版</h3>
+<ul>
+<li>ページ数：100〜200</li>
+<li>対象施設：200〜400</li>
+<li>言語：英語＋繁体字＋一部韓国語・タイ語</li>
+<li>SNS：週5〜毎日</li>
+<li>月間総コスト：100万〜250万円</li>
+</ul>
+<h3 id="s190">広域版</h3>
+<ul>
+<li>ページ数：300〜500</li>
+<li>対象施設：500〜1,000</li>
+<li>多言語</li>
+<li>複数自治体・事業者対応</li>
+<li>月間総コスト：250万〜600万円</li>
+</ul>
+<hr />
+  </div>
+</div>
+
+<div class="section-block" id="s191">
+  <div class="section-header" onclick="toggleSection(this)">
+    <h1>20. 収益予測</h1>
+    <span class="toggle-icon open">▲</span>
+  </div>
+  <div class="section-body">
+    <h2 id="s192">20.0 収益予測の基本方針と3年目公式目標</h2>
+<p>本事業の3年目目標は、年間売上 <strong>8,000万円〜1億円超</strong> を標準到達ラインとする。これは広告収益や掲載料だけで達成するものではなく、自治体受託、事業者制作、SNS運用、補助金活用支援、需要分析レポートを複合的に積み上げて達成する。</p>
+<p>社内検討上の公式目標は、以下の「標準到達モデル：1億60万円」を基準とする。20.3のシナリオ別表は、この公式目標に対して、受注が遅れた場合の保守シナリオと、複数自治体へ広域化できた場合の強気シナリオを示す補足である。</p>
+<h3 id="s193">3年目・標準到達モデル</h3>
+<table>
+<thead>
+<tr>
+<th>収益パターン</th>
+<th style="text-align: right;">単価・条件</th>
+<th style="text-align: right;">件数</th>
+<th style="text-align: right;">年間売上</th>
+<th>根拠・考え方</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>自治体DX受託・年間運用</td>
+<td style="text-align: right;">1,500万円</td>
+<td style="text-align: right;">3件</td>
+<td style="text-align: right;">4,500万円</td>
+<td>山形市・南陽市・長井市・米沢市など主要自治体・観光協会から3件獲得する想定</td>
+</tr>
+<tr>
+<td>事業者制作・受入整備パッケージ</td>
+<td style="text-align: right;">50万円</td>
+<td style="text-align: right;">50件</td>
+<td style="text-align: right;">2,500万円</td>
+<td>多言語ページ、写真、Googleマップ、予約導線、SNS素材整備</td>
+</tr>
+<tr>
+<td>補助金活用支援・申請補助</td>
+<td style="text-align: right;">30万円</td>
+<td style="text-align: right;">30件</td>
+<td style="text-align: right;">900万円</td>
+<td>補助対象整理、見積、実施計画、成果整理</td>
+</tr>
+<tr>
+<td>SNS運用月額</td>
+<td style="text-align: right;">月15万円×12ヶ月</td>
+<td style="text-align: right;">10件</td>
+<td style="text-align: right;">1,800万円</td>
+<td>旅館、飲食、ワイナリー、観光施設等</td>
+</tr>
+<tr>
+<td>需要分析・地域レポート</td>
+<td style="text-align: right;">月30万円×12ヶ月</td>
+<td style="text-align: right;">1件</td>
+<td style="text-align: right;">360万円</td>
+<td>広域観光協会・自治体向け</td>
+</tr>
+<tr>
+<td><strong>合計</strong></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"><strong>1億60万円</strong></td>
+<td>3年目に自治体3件＋民間50件を取れた場合</td>
+</tr>
+</tbody>
+</table>
+<h3 id="s194">到達条件</h3>
+<p>年間1億円超を達成するには、以下のうち少なくとも3つを満たす必要がある。</p>
+<ul>
+<li>自治体または観光協会の年間契約を3件以上獲得する</li>
+<li>事業者向け制作・受入整備を年間50件以上実施する</li>
+<li>SNS運用契約を10件以上獲得する</li>
+<li>キャパシティ台帳・需要レポートを複数自治体で運用する</li>
+<li>補助金活用支援を制作受注に接続する</li>
+</ul>
+<h3 id="s195">注意点</h3>
+<p>この売上は、検索メディア単体ではなく、検索メディアを営業資産として使い、自治体・観光協会・事業者の受託収益へ展開する前提である。したがって、1年目は検索資産と実績作り、2年目は自治体実証、3年目に複数案件化という段階設計が必要になる。</p>
+<h2 id="s196">20.1 1年目：先行投資・実証準備期</h2>
+<h3 id="s197">売上予測</h3>
+<table>
+<thead>
+<tr>
+<th>収益源</th>
+<th style="text-align: right;">保守</th>
+<th style="text-align: right;">標準</th>
+<th style="text-align: right;">強気</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>LP・ページ制作</td>
+<td style="text-align: right;">100万円</td>
+<td style="text-align: right;">300万円</td>
+<td style="text-align: right;">600万円</td>
+</tr>
+<tr>
+<td>SNS運用</td>
+<td style="text-align: right;">60万円</td>
+<td style="text-align: right;">240万円</td>
+<td style="text-align: right;">480万円</td>
+</tr>
+<tr>
+<td>写真・動画制作</td>
+<td style="text-align: right;">50万円</td>
+<td style="text-align: right;">200万円</td>
+<td style="text-align: right;">400万円</td>
+</tr>
+<tr>
+<td>多言語化</td>
+<td style="text-align: right;">50万円</td>
+<td style="text-align: right;">200万円</td>
+<td style="text-align: right;">400万円</td>
+</tr>
+<tr>
+<td>調査・レポート</td>
+<td style="text-align: right;">0円</td>
+<td style="text-align: right;">200万円</td>
+<td style="text-align: right;">500万円</td>
+</tr>
+<tr>
+<td>掲載料</td>
+<td style="text-align: right;">0円</td>
+<td style="text-align: right;">20万円</td>
+<td style="text-align: right;">100万円</td>
+</tr>
+<tr>
+<td>合計</td>
+<td style="text-align: right;">260万円</td>
+<td style="text-align: right;">1,160万円</td>
+<td style="text-align: right;">2,480万円</td>
+</tr>
+</tbody>
+</table>
+<h3 id="s198">費用予測</h3>
+<table>
+<thead>
+<tr>
+<th>費用</th>
+<th style="text-align: right;">保守</th>
+<th style="text-align: right;">標準</th>
+<th style="text-align: right;">強気</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>初期構築</td>
+<td style="text-align: right;">246万円</td>
+<td style="text-align: right;">433万円</td>
+<td style="text-align: right;">810万円</td>
+</tr>
+<tr>
+<td>月間運用</td>
+<td style="text-align: right;">40万円×9ヶ月→360万円</td>
+<td style="text-align: right;">75万円×9ヶ月→675万円</td>
+<td style="text-align: right;">120万円×9ヶ月→1,080万円</td>
+</tr>
+<tr>
+<td>合計</td>
+<td style="text-align: right;">606万円</td>
+<td style="text-align: right;">1,108万円</td>
+<td style="text-align: right;">1,890万円</td>
+</tr>
+</tbody>
+</table>
+<h3 id="s199">実質損益</h3>
+<table>
+<thead>
+<tr>
+<th>シナリオ</th>
+<th style="text-align: right;">売上</th>
+<th style="text-align: right;">費用</th>
+<th style="text-align: right;">損益</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>保守</td>
+<td style="text-align: right;">260万円</td>
+<td style="text-align: right;">606万円</td>
+<td style="text-align: right;">-346万円</td>
+</tr>
+<tr>
+<td>標準</td>
+<td style="text-align: right;">1,160万円</td>
+<td style="text-align: right;">1,108万円</td>
+<td style="text-align: right;">+52万円</td>
+</tr>
+<tr>
+<td>強気</td>
+<td style="text-align: right;">2,480万円</td>
+<td style="text-align: right;">1,890万円</td>
+<td style="text-align: right;">+590万円</td>
+</tr>
+</tbody>
+</table>
+<h2 id="s200">20.2 2年目：自治体実証・収益化開始期</h2>
+<table>
+<thead>
+<tr>
+<th>収益源</th>
+<th style="text-align: right;">保守</th>
+<th style="text-align: right;">標準</th>
+<th style="text-align: right;">強気</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>自治体実証</td>
+<td style="text-align: right;">500万円</td>
+<td style="text-align: right;">1,000万円</td>
+<td style="text-align: right;">2,000万円</td>
+</tr>
+<tr>
+<td>キャパシティ台帳</td>
+<td style="text-align: right;">300万円</td>
+<td style="text-align: right;">800万円</td>
+<td style="text-align: right;">1,500万円</td>
+</tr>
+<tr>
+<td>事業者制作</td>
+<td style="text-align: right;">300万円</td>
+<td style="text-align: right;">800万円</td>
+<td style="text-align: right;">1,500万円</td>
+</tr>
+<tr>
+<td>SNS運用</td>
+<td style="text-align: right;">360万円</td>
+<td style="text-align: right;">900万円</td>
+<td style="text-align: right;">1,800万円</td>
+</tr>
+<tr>
+<td>動画制作</td>
+<td style="text-align: right;">200万円</td>
+<td style="text-align: right;">600万円</td>
+<td style="text-align: right;">1,200万円</td>
+</tr>
+<tr>
+<td>多言語化</td>
+<td style="text-align: right;">200万円</td>
+<td style="text-align: right;">500万円</td>
+<td style="text-align: right;">1,000万円</td>
+</tr>
+<tr>
+<td>レポート・ダッシュボード</td>
+<td style="text-align: right;">120万円</td>
+<td style="text-align: right;">600万円</td>
+<td style="text-align: right;">1,200万円</td>
+</tr>
+<tr>
+<td>合計</td>
+<td style="text-align: right;">1,980万円</td>
+<td style="text-align: right;">5,200万円</td>
+<td style="text-align: right;">10,200万円</td>
+</tr>
+</tbody>
+</table>
+<h2 id="s201">20.3 3年目：広域展開・1億円超狙い</h2>
+<p>3年目の公式目標は、20.0で示した <strong>年間1億円前後</strong> とする。以下は、自治体案件の獲得速度と民間事業者向け受注件数によるシナリオ別の目安である。</p>
+<table>
+<thead>
+<tr>
+<th>収益源</th>
+<th style="text-align: right;">保守</th>
+<th style="text-align: right;">標準</th>
+<th style="text-align: right;">強気</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>自治体DX受託・年間運用</td>
+<td style="text-align: right;">1,500万円</td>
+<td style="text-align: right;">4,500万円</td>
+<td style="text-align: right;">5,500万円</td>
+</tr>
+<tr>
+<td>自治体実証・キャパシティ台帳</td>
+<td style="text-align: right;">1,000万円</td>
+<td style="text-align: right;">500万円</td>
+<td style="text-align: right;">1,500万円</td>
+</tr>
+<tr>
+<td>事業者制作・受入整備</td>
+<td style="text-align: right;">800万円</td>
+<td style="text-align: right;">2,500万円</td>
+<td style="text-align: right;">5,000万円</td>
+</tr>
+<tr>
+<td>補助金活用支援</td>
+<td style="text-align: right;">300万円</td>
+<td style="text-align: right;">900万円</td>
+<td style="text-align: right;">1,500万円</td>
+</tr>
+<tr>
+<td>SNS運用</td>
+<td style="text-align: right;">720万円</td>
+<td style="text-align: right;">1,800万円</td>
+<td style="text-align: right;">3,600万円</td>
+</tr>
+<tr>
+<td>動画・撮影</td>
+<td style="text-align: right;">500万円</td>
+<td style="text-align: right;">1,000万円</td>
+<td style="text-align: right;">1,500万円</td>
+</tr>
+<tr>
+<td>多言語化・監修</td>
+<td style="text-align: right;">500万円</td>
+<td style="text-align: right;">700万円</td>
+<td style="text-align: right;">1,000万円</td>
+</tr>
+<tr>
+<td>需要分析・地域レポート</td>
+<td style="text-align: right;">600万円</td>
+<td style="text-align: right;">360万円</td>
+<td style="text-align: right;">900万円</td>
+</tr>
+<tr>
+<td>掲載・送客</td>
+<td style="text-align: right;">100万円</td>
+<td style="text-align: right;">300万円</td>
+<td style="text-align: right;">500万円</td>
+</tr>
+<tr>
+<td><strong>合計</strong></td>
+<td style="text-align: right;"><strong>6,020万円</strong></td>
+<td style="text-align: right;"><strong>1億2560万円</strong></td>
+<td style="text-align: right;"><strong>1億9,500万円前後</strong></td>
+</tr>
+<tr>
+<td>※標準列の合計は構成要素の足し算とは必ずしも一致しない（一部重複や未計上があるため）</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr>
+<td>### 解釈</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+</tbody>
+</table>
+<p>標準シナリオでは、20.0の標準到達モデルと同じく、3年目に年間1億円前後の売上を目指す。標準列は中央値として単一値で示しており、実際の受注時には案件範囲・補助金活用・自治体の予算措置により上下する。強気シナリオは、自治体・観光協会の年間契約が4〜5件に増え、事業者制作が100件規模、SNS運用が20件規模まで拡大した場合の上限目安である。</p>
+<p>自治体提案版では、強気シナリオを前面に出しすぎず、標準到達モデルである <strong>1億円前後</strong> を中心に説明する。社内検討版では、広域化が進んだ場合の最大値として <strong>1.5億〜2億円規模</strong> を補足する。</p>
+<hr />
+  </div>
+</div>
+
+<div class="section-block" id="s202">
+  <div class="section-header" onclick="toggleSection(this)">
+    <h1>21. ロードマップ</h1>
+    <span class="toggle-icon open">▲</span>
+  </div>
+  <div class="section-body">
+    <h2 id="s203">Phase 0：準備期間 0〜1ヶ月</h2>
+<ul>
+<li>事業名決定</li>
+<li>ドメイン確認</li>
+<li>ターゲット国別設計</li>
+<li>キーワード調査</li>
+<li>競合調査</li>
+<li>ページテンプレート設計</li>
+<li>初期地域選定</li>
+<li>工数管理表作成</li>
+<li>法務・免責方針の確認</li>
+<li>令和9年度以降の観光庁補助金公募に向けた対象テーマ候補の洗い出し</li>
+</ul>
+<h3 id="s204">次Phaseへの進行条件</h3>
+<ul>
+<li>通称・正式名称が決定している</li>
+<li>初期ターゲット国、初期地域、初期30〜50ページのリストが確定している</li>
+<li>最低限の法務・免責・編集ポリシー方針が整理されている</li>
+</ul>
+<h2 id="s205">Phase 1：MVP構築 1〜3ヶ月</h2>
+<ul>
+<li>英語＋繁体字の基幹ページ公開</li>
+<li>初期30〜50ページ</li>
+<li>Instagram開始</li>
+<li>ショート動画制作</li>
+<li>Search Console / Analytics設定</li>
+<li>問い合わせフォーム</li>
+<li>事業者掲載フォーム</li>
+<li>編集ポリシー公開</li>
+<li>補助金活用候補となる事業者・自治体・DMOのリスト化</li>
+</ul>
+<h3 id="s206">次Phaseへの進行条件</h3>
+<ul>
+<li>英語＋繁体字の基幹ページが30ページ以上公開されている</li>
+<li>Search Consoleでインデックスと検索表示が確認できている</li>
+<li>Instagram投稿が30本以上蓄積している</li>
+<li>事業者掲載候補が20件以上リスト化されている</li>
+</ul>
+<h2 id="s207">Phase 2：需要可視化 4〜6ヶ月</h2>
+<ul>
+<li>ページ60〜100本へ拡張</li>
+<li>月山・南陽・長井・米沢ページ強化</li>
+<li>繁体字ページ追加</li>
+<li>Instagram継続</li>
+<li>初期データダッシュボード作成</li>
+<li>地域別検索シェア試算</li>
+<li>事業者無料掲載営業</li>
+<li>2026年10月以降の次回補助金申請準備に向けた初期レポート作成</li>
+</ul>
+<h3 id="s208">次Phaseへの進行条件</h3>
+<ul>
+<li>月間PV 3,000〜5,000以上、または特定ページで明確な伸長がある</li>
+<li>地域別検索シェアの初期レポートが作成できている</li>
+<li>掲載事業者が30件以上、うち有料化候補が10件以上ある</li>
+<li>自治体・観光協会への相談または面談が1〜3件発生している</li>
+</ul>
+<h2 id="s209">Phase 3：初期収益化 7〜12ヶ月</h2>
+<ul>
+<li>事業者向け有料プラン販売</li>
+<li>SNS運用受注</li>
+<li>補助金活用パック販売</li>
+<li>観光需要レポート作成</li>
+<li>自治体向け相談開始</li>
+<li>キャパシティ台帳の試作</li>
+</ul>
+<h3 id="s210">次Phaseへの進行条件</h3>
+<ul>
+<li>有料事業者契約が5〜10件以上ある</li>
+<li>年間売上300万〜800万円規模が見えている</li>
+<li>自治体向け需要レポートを1本以上提出できる状態にある</li>
+<li>キャパシティ台帳の試作対象地域が3地域以上ある</li>
+</ul>
+<h2 id="s211">Phase 4：自治体実証 13〜24ヶ月</h2>
+<ul>
+<li>1自治体または1エリアで実証</li>
+<li>快適度スコア管理画面</li>
+<li>需要急増アラート</li>
+<li>キャパシティ台帳整備</li>
+<li>観光協会・交通事業者連携</li>
+<li>月次レポート</li>
+</ul>
+<h3 id="s212">次Phaseへの進行条件</h3>
+<ul>
+<li>自治体実証または観光協会実証を1件以上受注している</li>
+<li>月次レポート・快適度スコア・需要アラートの運用実績が3ヶ月以上ある</li>
+<li>実証地域で事業者・交通・観光協会との連携体制が形成されている</li>
+<li>次年度本導入または別自治体横展開の見込みがある</li>
+</ul>
+<h2 id="s213">Phase 5：広域化 25〜36ヶ月</h2>
+<ul>
+<li>複数自治体導入</li>
+<li>県内企業連携</li>
+<li>Travel Safety整備</li>
+<li>防災・避難マップ連携</li>
+<li>広域ダッシュボード</li>
+<li>地域経済循環KPI運用</li>
+</ul>
+<h3 id="s214">広域化の継続条件</h3>
+<ul>
+<li>年間売上5,000万円以上、または翌年度1億円到達の受注見込みがある</li>
+<li>自治体・観光協会契約が2〜3件以上ある</li>
+<li>事業者制作・SNS運用・ダッシュボード運用が標準商品化されている</li>
+<li>県内企業連携の運用ルールと公平性設計が整っている</li>
+</ul>
+<hr />
+  </div>
+</div>
+
+<div class="section-block" id="s215">
+  <div class="section-header" onclick="toggleSection(this)">
+    <h1>22. 運用体制</h1>
+    <span class="toggle-icon open">▲</span>
+  </div>
+  <div class="section-body">
+    <h2 id="s216">22.1 最小体制</h2>
+<ul>
+<li>事業責任者：1名</li>
+<li>編集・SEO担当：0.5〜1名</li>
+<li>SNS・撮影担当：0.5名</li>
+<li>Web実装担当：必要時</li>
+<li>翻訳・監修：外注</li>
+<li>営業：兼任</li>
+</ul>
+<h2 id="s217">22.2 標準体制</h2>
+<ul>
+<li>事業責任者：1名</li>
+<li>編集長：1名</li>
+<li>ライター・編集：1〜2名</li>
+<li>SNS・動画：1名</li>
+<li>Web・データ担当：1名</li>
+<li>営業・自治体折衝：1名</li>
+<li>翻訳・監修：外注/大学連携</li>
+</ul>
+<h2 id="s218">22.3 広域体制</h2>
+<ul>
+<li>プロデューサー</li>
+<li>地域別編集担当</li>
+<li>データ分析担当</li>
+<li>カスタマーサクセス</li>
+<li>自治体担当</li>
+<li>事業者営業</li>
+<li>多言語監修チーム</li>
+<li>県内企業連携担当</li>
+</ul>
+<h2 id="s219">22.4 レベル別対応主体</h2>
+<table>
+<thead>
+<tr>
+<th>レベル</th>
+<th>状況</th>
+<th>対応主体</th>
+<th>対応内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>閲覧増加</td>
+<td>デジコンキューブ</td>
+<td>ページ更新・代替導線追加</td>
+</tr>
+<tr>
+<td>2</td>
+<td>検索急増</td>
+<td>観光協会</td>
+<td>交通・営業時間確認</td>
+</tr>
+<tr>
+<td>3</td>
+<td>混雑予兆</td>
+<td>自治体・事業者</td>
+<td>多言語案内・SNS告知</td>
+</tr>
+<tr>
+<td>4</td>
+<td>混雑警戒</td>
+<td>警備・交通</td>
+<td>駐車場・シャトル・誘導</td>
+</tr>
+<tr>
+<td>5</td>
+<td>受入限界</td>
+<td>自治体判断</td>
+<td>予約制・交通規制・時間分散</td>
+</tr>
+</tbody>
+</table>
+<hr />
+  </div>
+</div>
+
+<div class="section-block" id="s220">
+  <div class="section-header" onclick="toggleSection(this)">
+    <h1>23. データ・AI・技術仕様</h1>
+    <span class="toggle-icon open">▲</span>
+  </div>
+  <div class="section-body">
+    <h2 id="s221">23.1 AI検索に読まれやすいページ要件</h2>
+<ul>
+<li>FAQ形式</li>
+<li>構造化データ</li>
+<li>更新日</li>
+<li>著者情報</li>
+<li>監修情報</li>
+<li>公式リンク</li>
+<li>地図</li>
+<li>所要時間</li>
+<li>料金目安</li>
+<li>交通手段</li>
+<li>混雑情報</li>
+<li>季節情報</li>
+<li>代替案</li>
+<li>関連記事</li>
+<li>多言語URL</li>
+<li>表形式の比較</li>
+</ul>
+<h2 id="s222">23.2 AI検索モニタリング</h2>
+<p>毎月、以下のような質問をAI検索で確認する。</p>
+<ul>
+<li>What are the best places to visit in Yamagata?</li>
+<li>Is Yamagata worth visiting?</li>
+<li>How do I travel around Yamagata without a car?</li>
+<li>Best onsen towns in Yamagata?</li>
+<li>Where can I ski in Japan in May?</li>
+<li>山形自由行推薦</li>
+<li>山形不自駕怎麼玩</li>
+<li>山形二日遊</li>
+</ul>
+<p>自社サイトや地域ページが参照されるか、どの観光地が出てくるかを記録する。</p>
+<h2 id="s223">23.3 セキュリティ・システム運用</h2>
+<ul>
+<li>管理者権限の分離</li>
+<li>事業者ログイン権限</li>
+<li>2段階認証</li>
+<li>バックアップ</li>
+<li>障害時対応</li>
+<li>アクセスログ管理</li>
+<li>個人情報の保存範囲制限</li>
+<li>問い合わせデータの保管期間</li>
+<li>サーバー監視</li>
+<li>CMS更新</li>
+<li>多言語URL管理</li>
+</ul>
+<hr />
+  </div>
+</div>
+
+<div class="section-block" id="s224">
+  <div class="section-header" onclick="toggleSection(this)">
+    <h1>24. 法務・責任範囲・免責</h1>
+    <span class="toggle-icon open">▲</span>
+  </div>
+  <div class="section-body">
+    <h2 id="s225">24.1 基本方針</h2>
+<p>本プラットフォームは、観光・交通・安全情報を扱うため、情報の正確性と責任範囲を明確にする必要がある。</p>
+<h2 id="s226">24.2 必須整備項目</h2>
+<ul>
+<li>プライバシーポリシー</li>
+<li>Cookie利用方針</li>
+<li>免責事項</li>
+<li>掲載情報の正確性に関する責任範囲</li>
+<li>外部リンク先に関する免責</li>
+<li>防災・交通・医療情報は公式情報を優先する旨</li>
+<li>事業者ページ掲載規約</li>
+<li>AI利用方針</li>
+</ul>
+<h2 id="s227">24.3 情報種別ごとの扱い</h2>
+<h3 id="s228">観光情報</h3>
+<p>AI下書き＋人間確認で公開可能。ただし、更新日と公式リンクを表示する。</p>
+<h3 id="s229">交通・規制情報</h3>
+<p>公式情報を一次情報とし、必ず公式リンクを併記する。</p>
+<h3 id="s230">混雑・快適度情報</h3>
+<p>予測指標であり、現地状況を保証するものではないと明記する。</p>
+<h3 id="s231">防災・医療・避難情報</h3>
+<p>自治体・気象庁・交通事業者・医療機関などの公式情報を一次情報とし、AIに判断を任せない。</p>
+<hr />
+  </div>
+</div>
+
+<div class="section-block" id="s232">
+  <div class="section-header" onclick="toggleSection(this)">
+    <h1>25. リスク・デメリット・突破策</h1>
+    <span class="toggle-icon open">▲</span>
+  </div>
+  <div class="section-body">
+    <h2 id="s233">25.1 検索成果が出るまで時間がかかる</h2>
+<h3 id="s234">リスク</h3>
+<p>6〜12ヶ月は大きな成果が見えにくい。</p>
+<h3 id="s235">対策</h3>
+<ul>
+<li>初期KPIを売上ではなく表示回数・クリック数・ページ数にする</li>
+<li>SNSと広告で補助する</li>
+<li>ロングテールから攻める</li>
+<li>事業者制作で短期売上を作る</li>
+</ul>
+<h2 id="s236">25.2 AI記事の品質低下</h2>
+<h3 id="s237">リスク</h3>
+<p>薄い記事、誤情報、一般論になる。</p>
+<h3 id="s238">対策</h3>
+<ul>
+<li>Tier 1：AI下書き</li>
+<li>Tier 2：人間編集</li>
+<li>Tier 3：取材・監修</li>
+<li>重要ページから優先強化</li>
+</ul>
+<h2 id="s239">25.3 住民反発</h2>
+<h3 id="s240">リスク</h3>
+<p>観光客増加が住民生活を圧迫する。</p>
+<h3 id="s241">対策</h3>
+<ul>
+<li>Responsible Travelページ</li>
+<li>私有地・撮影マナー案内</li>
+<li>快適度スコア</li>
+<li>代替導線</li>
+<li>住民説明</li>
+<li>地域還元KPI</li>
+</ul>
+<h2 id="s242">25.4 快適度スコアへの反発</h2>
+<h3 id="s243">リスク</h3>
+<p>事業者から「混雑表示で客が減る」と言われる。</p>
+<h3 id="s244">対策</h3>
+<ul>
+<li>初期は内部運用</li>
+<li>算出基準を説明</li>
+<li>ネガティブ表示ではなく代替導線とセット</li>
+<li>自治体・観光協会と表示ルールを合意</li>
+</ul>
+<h2 id="s245">25.5 公共調達の壁</h2>
+<h3 id="s246">リスク</h3>
+<p>自治体案件は予算化・仕様書・入札・公平性の壁がある。</p>
+<h3 id="s247">対策</h3>
+<ul>
+<li>調査業務から入る</li>
+<li>実証事業化する</li>
+<li>レポート・台帳整備から始める</li>
+<li>翌年度の本導入に接続する</li>
+</ul>
+<h2 id="s248">25.6 利益率低下</h2>
+<h3 id="s249">リスク</h3>
+<p>無料対応、会議、翻訳、撮影、修正が増えすぎる。</p>
+<h3 id="s250">対策</h3>
+<ul>
+<li>無料掲載範囲を明確化</li>
+<li>修正回数制限</li>
+<li>レポートテンプレート化</li>
+<li>会議回数を契約に明記</li>
+<li>現地対応は別途見積</li>
+</ul>
+<h2 id="s251">25.7 成功しすぎた場合の混乱</h2>
+<h3 id="s252">リスク</h3>
+<p>掲載依頼増加、地域間格差、混雑スコアへの不満。</p>
+<h3 id="s253">対策</h3>
+<ul>
+<li>掲載基準</li>
+<li>地域別掲載枠</li>
+<li>有料・無料の線引き</li>
+<li>スコア運用ルール</li>
+<li>県内企業登録制度</li>
+</ul>
+<hr />
+  </div>
+</div>
+
+<div class="section-block" id="s254">
+  <div class="section-header" onclick="toggleSection(this)">
+    <h1>26. KPI・見える化</h1>
+    <span class="toggle-icon open">▲</span>
+  </div>
+  <div class="section-body">
+    <h2 id="s255">26.1 初期KPI</h2>
+<ul>
+<li>公開ページ数</li>
+<li>インデックス数</li>
+<li>検索表示回数</li>
+<li>検索クリック数</li>
+<li>繁体字流入</li>
+<li>Instagram投稿数</li>
+<li>Instagram保存数</li>
+<li>問い合わせ数</li>
+<li>掲載事業者数</li>
+</ul>
+<h2 id="s256">26.2 中期KPI</h2>
+<ul>
+<li>地域別検索シェア</li>
+<li>快適度スコア対象地域数</li>
+<li>需要アラート件数</li>
+<li>代替導線クリック率</li>
+<li>有料事業者数</li>
+<li>自治体相談数</li>
+<li>月次レポート契約数</li>
+</ul>
+<h2 id="s257">26.3 長期KPI</h2>
+<ul>
+<li>自治体導入数</li>
+<li>年間運用契約額</li>
+<li>県内企業参画数</li>
+<li>県内企業への発注額</li>
+<li>地元事業者送客クリック</li>
+<li>宿泊導線クリック</li>
+<li>地域分散率</li>
+<li>住民・事業者満足度</li>
+</ul>
+<hr />
+  </div>
+</div>
+
+<div class="section-block" id="s258">
+  <div class="section-header" onclick="toggleSection(this)">
+    <h1>27. 営業戦略</h1>
+    <span class="toggle-icon open">▲</span>
+  </div>
+  <div class="section-body">
+    <h2 id="s259">27.1 最初の請求書を誰に出すか</h2>
+<p>最初から自治体大型案件を狙うと時間がかかる。初期は、以下の順が現実的である。</p>
+<ol>
+<li>自社メディアを小さく作る</li>
+<li>観光事業者向け小口受注を作る</li>
+<li>検索・SNSデータを蓄積する</li>
+<li>観光協会・自治体へレポート提案する</li>
+<li>実証事業へ接続する</li>
+</ol>
+<h2 id="s260">27.2 営業先</h2>
+<h3 id="s261">自治体・団体</h3>
+<ul>
+<li>山形県観光関連部署</li>
+<li>山形市インバウンド推進関連部署</li>
+<li>南陽市観光関連部署</li>
+<li>長井市観光・DX関連部署</li>
+<li>米沢市観光関連部署</li>
+<li>上山市観光関連部署</li>
+<li>西川町・月山関係</li>
+<li>尾花沢市・銀山温泉関係</li>
+<li>観光協会</li>
+<li>商工会議所</li>
+<li>DMO/DMC</li>
+</ul>
+<h3 id="s262">事業者</h3>
+<ul>
+<li>温泉旅館</li>
+<li>ワイナリー</li>
+<li>飲食店</li>
+<li>体験事業者</li>
+<li>タクシー会社</li>
+<li>バス会社</li>
+<li>レンタカー</li>
+<li>道の駅</li>
+<li>スキー場</li>
+<li>観光案内所</li>
+<li>酒蔵</li>
+<li>果樹園</li>
+</ul>
+<hr />
+  </div>
+</div>
+
+<div class="section-block" id="s263">
+  <div class="section-header" onclick="toggleSection(this)">
+    <h1>28. 価格表案</h1>
+    <span class="toggle-icon open">▲</span>
+  </div>
+  <div class="section-body">
+    <h2 id="s264">28.1 事業者向け</h2>
+<p>標準定価</p>
+<table>
+<thead>
+<tr>
+<th>プラン</th>
+<th>内容</th>
+<th style="text-align: right;">価格</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Basic</td>
+<td>無料掲載、基本情報、地図</td>
+<td style="text-align: right;">0円〜月5,000円</td>
+</tr>
+<tr>
+<td>Standard</td>
+<td>多言語紹介文、写真5枚、記事内掲載</td>
+<td style="text-align: right;">15万〜30万円</td>
+</tr>
+<tr>
+<td>Premium</td>
+<td>撮影、動画、SNS投稿、予約導線</td>
+<td style="text-align: right;">50万〜120万円</td>
+</tr>
+<tr>
+<td>Monthly</td>
+<td>更新、SNS、アクセスレポート</td>
+<td style="text-align: right;">月5万〜30万円</td>
+</tr>
+</tbody>
+</table>
+<h2 id="s265">28.2 自治体向け</h2>
+<p>標準定価</p>
+<table>
+<thead>
+<tr>
+<th>プラン</th>
+<th>内容</th>
+<th style="text-align: right;">価格</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>調査・設計</td>
+<td>需要調査、キーワード、地域分析</td>
+<td style="text-align: right;">100万〜300万円</td>
+</tr>
+<tr>
+<td>実証</td>
+<td>多言語ページ、ダッシュボード、SNS</td>
+<td style="text-align: right;">500万〜1,000万円</td>
+</tr>
+<tr>
+<td>標準導入</td>
+<td>管理画面、事業者DB、レポート</td>
+<td style="text-align: right;">1,500万〜3,000万円</td>
+</tr>
+<tr>
+<td>広域導入</td>
+<td>複数自治体、防災連携、需要予測</td>
+<td style="text-align: right;">3,000万〜8,000万円</td>
+</tr>
+<tr>
+<td>月額運用</td>
+<td>レポート、更新、分析、会議</td>
+<td style="text-align: right;">月30万〜200万円</td>
+</tr>
+</tbody>
+</table>
+<hr />
+  </div>
+</div>
+
+<div class="section-block" id="s266">
+  <div class="section-header" onclick="toggleSection(this)">
+    <h1>29. やらないこと</h1>
+    <span class="toggle-icon open">▲</span>
+  </div>
+  <div class="section-body">
+    <p>本事業では、以下を避ける。</p>
+<ul>
+<li>人気スポットだけを過剰に煽る</li>
+<li>映える写真だけで交通規制を隠す</li>
+<li>AI記事を未確認で公開する</li>
+<li>公式サイトに見える名称にする</li>
+<li>防災情報をAIに判断させる</li>
+<li>外国人だけを優遇する見せ方にする</li>
+<li>地元事業者を有料掲載だけでふるい落とす</li>
+<li>低品質ページを量産する</li>
+<li>更新日を出さない</li>
+<li>混雑を見て見ぬふりする</li>
+<li>予約・決済を安易に自社で持つ</li>
+<li>県内企業へ特定発注すると誤解される表現を使う</li>
+</ul>
+<hr />
+  </div>
+</div>
+
+<div class="section-block" id="s267">
+  <div class="section-header" onclick="toggleSection(this)">
+    <h1>30. 次に行うべき確認事項</h1>
+    <span class="toggle-icon open">▲</span>
+  </div>
+  <div class="section-body">
+    <h2 id="s268">30.1 社内確認</h2>
+<ul>
+<li>避難マップシステムの権利・改修余地</li>
+<li>自治体向けに使える技術実績</li>
+<li>Web制作・SNS・動画の社内リソース</li>
+<li>初年度の先行投資許容額</li>
+<li>事業責任者</li>
+<li>営業担当</li>
+</ul>
+<h2 id="s269">30.2 外部確認</h2>
+<ul>
+<li>山形県インバウンド受入環境整備支援事業費補助金の最新要項、対象経費、申請時期、交付決定前着手の可否</li>
+<li>観光庁「観光需要分散のための地域観光資源のコンテンツ化促進事業」の次回公募時期、類型、対象経費、共同申請先候補</li>
+<li>市町村独自の観光・DX・多言語化・商工支援補助金の有無</li>
+<li>既存観光サイトとの関係</li>
+<li>山形市・南陽市・長井市・米沢市の担当部署</li>
+<li>観光協会の課題</li>
+<li>銀山・蔵王・月山などの受入課題</li>
+<li>台湾・香港向け媒体の出稿費</li>
+<li>翻訳・監修者候補</li>
+<li>交通事業者連携可能性</li>
+</ul>
+<h2 id="s270">30.3 MVP作成</h2>
+<ul>
+<li>英語・繁体字の基幹ページリスト</li>
+<li>初期30〜50ページ</li>
+<li>Instagramアカウント設計</li>
+<li>快適度スコアの試算式</li>
+<li>観光地キャパシティ台帳テンプレート</li>
+<li>自治体向け1枚資料</li>
+<li>事業者向け価格表</li>
+</ul>
+<hr />
+  </div>
+</div>
+
+<div class="section-block" id="s271">
+  <div class="section-header" onclick="toggleSection(this)">
+    <h1>31. 最終提案文</h1>
+    <span class="toggle-icon open">▲</span>
+  </div>
+  <div class="section-body">
+    <p>本事業は、山形への海外関心を増やすだけの観光メディアではない。検索・SNS・AI検索上の需要を可視化し、観光地ごとの受入容量や地域住民の生活環境を踏まえながら、旅行者を県内各地へ自然に分散させる観光導線制御インフラである。</p>
+<p>初期ターゲットは、山形・東北への実需が大きい台湾・香港の繁体字圏FIT旅行者とし、英語圏・欧米豪の高付加価値層、タイ・ASEANの雪・温泉・地方体験層へ段階的に展開する。National Geographic選出や蔵王の高付加価値化を追い風にしつつ、蔵王・銀山温泉だけに需要を集中させず、月山、南陽、長井、米沢、上山、庄内などへ観光消費を分散させる。</p>
+<p>特に本事業では、観光需要を無制限に増やすのではなく、快適度スコア、需要急増アラート、観光地キャパシティ台帳、代替体験提案により、旅行者が自らより快適な時間・場所・ルートを選べる導線を設計する。これにより、日本人観光客、県民、地域住民の利用余地を守りながら、外国人旅行者の満足度も高める。</p>
+<p>さらに、増加する観光需要を警備、交通、翻訳、印刷、映像、清掃、人材、IT、飲食、宿泊など県内企業の新たな業務機会へ変換し、地域内経済循環を高める。デジコンキューブは、Web、SNS、動画、AI、マップ、データ分析、自治体提案を一体で実行できる地域プロデューサーとして、観光需要の可視化、情報基盤の構築、業務分解、県内企業との連携、自治体向けレポート化を担う。</p>
+<p>この事業の最終目的は、山形をただ有名にすることではない。海外からの関心を、山形全体の回遊、地元消費、県内企業の新規業務、持続可能な観光政策へ変換することである。</p>
+<hr />
+  </div>
+</div>
+
+<div class="section-block" id="s272">
+  <div class="section-header" onclick="toggleSection(this)">
+    <h1>付録A：初期ページ案</h1>
+    <span class="toggle-icon open">▲</span>
+  </div>
+  <div class="section-body">
+    <h2 id="s273">英語基幹ページ</h2>
+<ol>
+<li>Yamagata Travel Guide 2026</li>
+<li>Why Yamagata Was Named One of the Best Places to Visit in 2026</li>
+<li>Yamagata Without a Car</li>
+<li>Yamagata 2-Day Itinerary</li>
+<li>Yamagata 3-Day Itinerary</li>
+<li>Yamagata Winter Travel Guide</li>
+<li>Zao Onsen and Snow Monsters Guide</li>
+<li>Beyond Zao: Hidden Places in Yamagata</li>
+<li>Gassan Summer Skiing Guide</li>
+<li>Yamagata Onsen and Sake Guide</li>
+<li>Dewa Sanzan and Spiritual Travel in Yamagata</li>
+<li>Yamagata for Slow Travel and Hidden Japan</li>
+<li>Nanyo Wine Tourism</li>
+<li>Nagai Local Walk Guide</li>
+<li>Yonezawa Beef and Samurai Culture Itinerary</li>
+</ol>
+<h2 id="s274">繁体字基幹ページ</h2>
+<ol>
+<li>山形自由行完整攻略</li>
+<li>山形二日遊推薦</li>
+<li>山形三日遊推薦</li>
+<li>仙台出發山形一日遊</li>
+<li>不自駕也能玩山形</li>
+<li>山形冬季賞雪攻略</li>
+<li>藏王樹冰完整攻略</li>
+<li>藏王溫泉與滑雪指南</li>
+<li>山形溫泉推薦</li>
+<li>山形美食與米澤牛</li>
+<li>南陽酒莊與赤湯溫泉</li>
+<li>米澤牛與上杉文化一日遊</li>
+<li>山寺交通與行程攻略</li>
+<li>銀山溫泉以外的山形景點</li>
+<li>日本也能夏天滑雪？山形月山攻略</li>
+</ol>
+<hr />
+  </div>
+</div>
+
+<div class="section-block" id="s275">
+  <div class="section-header" onclick="toggleSection(this)">
+    <h1>付録B：ページテンプレート</h1>
+    <span class="toggle-icon open">▲</span>
+  </div>
+  <div class="section-body">
+    <ol>
+<li>Summary</li>
+<li>Why visit</li>
+<li>Best things to do</li>
+<li>Suggested itinerary</li>
+<li>How to get there</li>
+<li>Best season</li>
+<li>Food and local experiences</li>
+<li>Visit Comfort Score</li>
+<li>Tips for international travelers</li>
+<li>Responsible Travel</li>
+<li>Travel Safety</li>
+<li>Map</li>
+<li>Related articles</li>
+<li>Official links</li>
+<li>Last updated</li>
+</ol>
+<hr />
+  </div>
+</div>
+
+<div class="section-block" id="s276">
+  <div class="section-header" onclick="toggleSection(this)">
+    <h1>付録C：Responsible Travel項目</h1>
+    <span class="toggle-icon open">▲</span>
+  </div>
+  <div class="section-body">
+    <ul>
+<li>温泉マナー</li>
+<li>神社仏閣での撮影マナー</li>
+<li>雪道の歩き方</li>
+<li>私有地に入らない</li>
+<li>ゴミの持ち帰り</li>
+<li>飲食店予約キャンセル</li>
+<li>ドローン禁止</li>
+<li>静かな集落での過ごし方</li>
+<li>熊・山岳・雪崩など自然リスク</li>
+<li>現金・営業時間・小規模店舗への配慮</li>
+</ul>
+<hr />
+  </div>
+</div>
+
+<div class="section-block" id="s277">
+  <div class="section-header" onclick="toggleSection(this)">
+    <h1>付録D：Travel Safety項目</h1>
+    <span class="toggle-icon open">▲</span>
+  </div>
+  <div class="section-body">
+    <ul>
+<li>大雪時の交通</li>
+<li>地震時の対応</li>
+<li>温泉・体調</li>
+<li>スキー・バックカントリー</li>
+<li>登山・山伏体験</li>
+<li>クマ・野生動物</li>
+<li>熱中症</li>
+<li>アレルギー</li>
+<li>病院・薬局</li>
+<li>緊急連絡先</li>
+<li>交通運休</li>
+<li>Wi-Fi・充電</li>
+<li>言語対応</li>
+</ul>
+<hr />
+<p>以上。</p>
+  </div>
+</div>
+
+
+  </div>
+</div>
+
+<a href="#" class="back-top" id="backTop" title="トップへ">↑</a>
+
+<script>
+// Section toggle
+function toggleSection(btn) {
+  const body = btn.nextElementSibling;
+  const icon = btn.querySelector('.toggle-icon');
+  if (body.classList.contains('collapsed')) {
+    body.classList.remove('collapsed');
+    icon.classList.add('open');
+    icon.textContent = '▲';
+  } else {
+    body.classList.add('collapsed');
+    icon.classList.remove('open');
+    icon.textContent = '▼';
+  }
+}
+
+// Sidebar mobile toggle
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+}
+
+// Close sidebar on nav link click (mobile)
+document.querySelectorAll('.nav-link').forEach(link => {
+  link.addEventListener('click', () => {
+    document.getElementById('sidebar').classList.remove('open');
+  });
+});
+
+// Scroll progress + active nav + back to top
+const progressFill = document.getElementById('progressFill');
+const backTop = document.getElementById('backTop');
+const navLinks = document.querySelectorAll('.nav-link');
+const sections = document.querySelectorAll('.section-block');
+
+window.addEventListener('scroll', () => {
+  const scrollTop = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  progressFill.style.width = (scrollTop / docHeight * 100) + '%';
+  
+  backTop.classList.toggle('visible', scrollTop > 400);
+  
+  // Active nav highlight
+  let current = '';
+  sections.forEach(sec => {
+    const h = sec.querySelector('h1');
+    if (h && h.getBoundingClientRect().top < 120) current = h.id;
+  });
+  navLinks.forEach(link => {
+    link.classList.toggle('active', link.getAttribute('href') === '#' + current);
+  });
+});
+
+// Expand all sections by default, but allow collapse
+document.querySelectorAll('.section-header').forEach(btn => {
+  btn.querySelector('.toggle-icon').textContent = '▲';
+  btn.querySelector('.toggle-icon').classList.add('open');
+});
+</script>
+
+</body>
+</html>
